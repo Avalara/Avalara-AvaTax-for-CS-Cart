@@ -1,10 +1,10 @@
 <?php
-define("FREE_PLANS_JSON", '["ZT - Free - Pro"]');
-define("CAMPAIGNID", "70133000001QIO4AAO");
-define("LEADSOURCEMOSTRECENT", "NTO QB");
-define("COMPANY_CODE", "Avalara");
-define("ONBOARDING_USERNAME", "TEST/vijay.nalawade@avalara.com");
-define("ONBOARDING_PASSWORD", "Avalara@123");
+define("FREE_PLANS_JSON", 'Valid_FREE_PLANS_JSON');
+define("CAMPAIGNID", "Valid_CAMPAIGNID");
+define("LEADSOURCEMOSTRECENT", "Valid_LEADSOURCEMOSTRECENT");
+define("COMPANY_CODE", "Valid_AvaTaxCompanyCode");
+define("ONBOARDING_USERNAME", "Valid_Username");
+define("ONBOARDING_PASSWORD", "Valid_Password");
 
 $countryArray = Array
 (
