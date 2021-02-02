@@ -77,11 +77,11 @@ function fn_avatax_tax_calculation_testconnection()
                     var accountVal = document.querySelector("[id^=\'addon_option_avatax_tax_calculation_avatax_account_number\']").value;
                     var licenseVal = document.querySelector("[id^=\'addon_option_avatax_tax_calculation_avatax_license_key\']").value;
                     var serviceURLVal = document.querySelector("[id^=\'addon_option_avatax_tax_calculation_avatax_service_url\']").value;
-                    var isAvataxEnabled = $("#addon_option_avatax_tax_calculation_avatax_tax_calculation input[type=radio]:checked").val();
-                    var isUPCOption = $("#addon_option_avatax_tax_calculation_avatax_tax_upc input[type=radio]:checked").val();
-                    var isSaveTransaction = $("#addon_option_avatax_tax_calculation_avatax_tax_savedoc input[type=radio]:checked").val();
-                    var isAddressValidation = $("#addon_option_avatax_tax_calculation_avatax_tax_address_validation input[type=radio]:checked").val();
-                    var isLogEnabled = $("#addon_option_avatax_tax_calculation_avatax_log_mode input[type=radio]:checked").val();
+                    var isAvataxEnabled = $("[id^=\'addon_option_avatax_tax_calculation_avatax_tax_calculation\'] input[type=radio]:checked").val();
+                    var isUPCOption = $("[id^=\'addon_option_avatax_tax_calculation_avatax_tax_upc\'] input[type=radio]:checked").val();
+                    var isSaveTransaction = $("[id^=\'addon_option_avatax_tax_calculation_avatax_tax_savedoc\'] input[type=radio]:checked").val();
+                    var isAddressValidation = $("[id^=\'addon_option_avatax_tax_calculation_avatax_tax_address_validation\'] input[type=radio]:checked").val();
+                    var isLogEnabled = $("[id^=\'addon_option_avatax_tax_calculation_avatax_log_mode input\'][type=radio]:checked").val();
                     var companyCode = document.querySelector("[id^=\'addon_option_avatax_tax_calculation_avatax_company_code\']").value;
                     var environment = serviceURLVal.indexOf("development") > 0 ? "Development" : "Production";
                     var client = "'.CLIENT_NAME.'";
