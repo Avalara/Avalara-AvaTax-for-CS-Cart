@@ -107,30 +107,30 @@
          */
         
         function writeConfigLog($account,$license,$serviceurl,$companyCode,$environment,$client,$isAvataxEnabled,$isUPCOption,$isSaveTransaction,$isLogEnabled,$isAddressValidation)
-    {
-	$logging_folder		=	$this->createLogPath();
-	$log_file_name		=	$logging_folder . "/Ava-Connector-Configuration-Log-" . date('d-m-Y') . ".txt";
-	$log_file 		= 	fopen($log_file_name, "a") or die("Unable to open $log_file_name ");
+        {
+	        $logging_folder		=	$this->createLogPath();
+			$log_file_name		=	$logging_folder . "/Ava-Connector-Configuration-Log-" . date('d-m-Y') . ".txt";
+			$log_file 		= 	fopen($log_file_name, "a") or die("Unable to open $log_file_name ");
 
-	fprintf($log_file, "%s", "Connector Configuration : ");
-	fprintf($log_file, "%s%s", "Account ID : ", $account);
-	fprintf($log_file, "%s%s", " License Key : ", $license);
-	fprintf($log_file, "%s%s", ",ServiceURL : ", $serviceurl);
-	fprintf($log_file, "%s%s\r", ",Company Code: ", $companyCode);
-	fprintf($log_file, "%s%s", "Environment : ", $environment);
-	fprintf($log_file, "%s%s", ",Client : ", $client);
-	fprintf($log_file, "%s%s", ",Is Avatax Enabled : ", $isAvataxEnabled);
-	fprintf($log_file, "%s%s", ",Is UPC Option Enabled: ", $isUPCOption);
-	fprintf($log_file, "%s%s", ",Is Save Transaction Enabled: ", $isSaveTransaction);
-	fprintf($log_file, "%s%s", ",Is Log Enabled: ", $isLogEnabled);
-	fprintf($log_file, "%s%s\r\n", ",Is Address Validation Enabled: ", $isAddressValidation);
-	//fprintf($log_file, "%s%s\r\n", "------------", "------------");
+			fprintf($log_file, "%s", "Connector Configuration : ");
+			fprintf($log_file, "%s%s", "Account ID : ", $account);
+			fprintf($log_file, "%s%s", " License Key : ", $license);
+			fprintf($log_file, "%s%s", ",ServiceURL : ", $serviceurl);
+			fprintf($log_file, "%s%s\r", ",Company Code: ", $companyCode);
+			fprintf($log_file, "%s%s", "Environment : ", $environment);
+			fprintf($log_file, "%s%s", ",Client : ", $client);
+			fprintf($log_file, "%s%s", ",Is Avatax Enabled : ", $isAvataxEnabled);
+			fprintf($log_file, "%s%s", ",Is UPC Option Enabled: ", $isUPCOption);
+			fprintf($log_file, "%s%s", ",Is Save Transaction Enabled: ", $isSaveTransaction);
+			fprintf($log_file, "%s%s", ",Is Log Enabled: ", $isLogEnabled);
+			fprintf($log_file, "%s%s\r\n", ",Is Address Validation Enabled: ", $isAddressValidation);
+			//fprintf($log_file, "%s%s\r\n", "------------", "------------");
 
-	fclose($log_file);
-    }
+			fclose($log_file);
+    	}
 
 		function serviceLog($performance_metrics)
-    {
+    	{
 			$resp = array();
 			foreach ($performance_metrics as $entry) {
 				$row = array();
@@ -140,48 +140,48 @@
 				array_push($resp, implode(',', $row));
 			}
                         
-			 $csv_data = implode("\r\n", $resp);
+			$csv_data = implode("\r\n", $resp);
                         
 			$url = 'https://qa.cphforavatax.com/Ava_Post_C_Log';
 			//$url = 'https://avataxforcph.connectorsdev.avatax.com/Ava_Post_C_Log';
 			$ch = curl_init($url);
 			$options = array(
-					CURLOPT_RETURNTRANSFER => true,         // return web page
-					CURLOPT_HEADER         => false,        // don't return headers
-					CURLOPT_FOLLOWLOCATION => false,         // follow redirects
-				   // CURLOPT_ENCODING       => "utf-8",           // handle all encodings
-					CURLOPT_AUTOREFERER    => true,         // set referer on redirect
-					CURLOPT_CONNECTTIMEOUT => 20,          // timeout on connect
-					CURLOPT_TIMEOUT        => 20,          // timeout on response
-					CURLOPT_POST            => 1,            // i am sending post data
-					CURLOPT_POSTFIELDS     => $csv_data,    // this are my post vars
-					CURLOPT_SSL_VERIFYHOST => 0,            // don't verify ssl
-					CURLOPT_SSL_VERIFYPEER => false,        //
-					CURLOPT_VERBOSE        => 1
+				CURLOPT_RETURNTRANSFER => true,         // return web page
+				CURLOPT_HEADER         => false,        // don't return headers
+				CURLOPT_FOLLOWLOCATION => false,         // follow redirects
+				// CURLOPT_ENCODING       => "utf-8",           // handle all encodings
+				CURLOPT_AUTOREFERER    => true,         // set referer on redirect
+				CURLOPT_CONNECTTIMEOUT => 20,          // timeout on connect
+				CURLOPT_TIMEOUT        => 20,          // timeout on response
+				CURLOPT_POST            => 1,            // i am sending post data
+				CURLOPT_POSTFIELDS     => $csv_data,    // this are my post vars
+				CURLOPT_SSL_VERIFYHOST => 0,            // don't verify ssl
+				CURLOPT_SSL_VERIFYPEER => false,        //
+				CURLOPT_VERBOSE        => 1
 			);
 
 			curl_setopt_array($ch,$options);
 			$data = curl_exec($ch);
 			$curl_errno = curl_errno($ch);
-                         $curl_error = curl_error($ch);
+            $curl_error = curl_error($ch);
 			curl_close($ch);
                         
-                        return $data;
+            return $data;
 			//echo "<p>CURL Response</p>";	*/
         }
 		
 		function createLogPath()
 		{
 			// If does not exist, create a folder named ava-sys-logs - under the given path
-		//	$curr_dir	=	getcwd();
+			// $curr_dir	=	getcwd();
 			
 			// Check if a folder named ava-logs exist below CWD
 			
 			//$dir_name	=	'ava-logs';
 			
-			$dir_name	=	dirname ( __FILE__ ).'/ava-logs';		// For now this is hard-coded
-			if (is_dir($dir_name)) 	// Checking if the sub-folder ava-logs exists under current folder
-			{
+			$dir_name = dirname ( __FILE__ ).'/ava-logs';		// For now this is hard-coded
+            // Checking if the sub-folder ava-logs exists under current folder
+			if (is_dir($dir_name)) {
 
 				if ($dh = opendir($dir_name)) 
 				{
@@ -197,17 +197,15 @@
 					mkdir($dir_name, 0777, true);
 				}			
 				
-			}
-			else
-			{
+			} else {
 				mkdir($dir_name, 0777, true);
 			}
 			
 			$log_folder = $dir_name;
 			
 			return $log_folder;
-			
 		}
+		
 		/* Writes the current system log to designated log file */
 		function WriteSystemLogToFile()
 		{
@@ -226,7 +224,6 @@
 			fprintf($log_file, "%s%s\r\n", "------------", "------------");
 			
 			fclose($log_file);				
-		
 		}
 		
 		function WriteSystemLogToDB()
@@ -240,12 +237,9 @@
 			$con = mysqli_connect($dbhost_name, $username, $password, $database);
 
 			// Check connection
-			if (mysqli_connect_errno())
-			{
+			if (mysqli_connect_errno()) {
 				echo "Failed to connect to MySQL: " . mysqli_connect_error();
-			}
-			else
-			{
+			} else {
 				;	// connection successful
 			}
 			
@@ -282,7 +276,7 @@
 			mysqli_query($con, $query);
 			
 			// fetch the record no of last inserted record			
-			$rec_no	=	mysqli_insert_id($con);
+			$rec_no	= mysqli_insert_id($con);
 			
 			// close the database			
 			mysqli_close($con);				

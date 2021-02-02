@@ -16,8 +16,8 @@
  *                                                                          *
  *   This source file was cleaned-up to meet the requirements for release   *
  *   done by Avalara - on 02/20/2015                                        *
- *   File Version       :                                                    *
- *   Last Updated On    :    05/27/2016                                        *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    03/02/2021                                     *
  ***************************************************************************/
  
 
@@ -37,14 +37,14 @@ define('CLIENT_NAME',AVALARA_VERSION);
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/20/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   03/02/2021                                      *
  *   Description        :   This function allow user to test the connection *
  *                          between CS Cart and Avalara Admin Console. This *
  *                          action is performed after installing the AvaTax *
  *                          Addon from CS Cart Admin Console                *
- **********************************************e*****************************/
+ ****************************************************************************/
  
 function fn_avatax_tax_calculation_testconnection()
 {
@@ -464,15 +464,15 @@ function fn_avatax_tax_setup_assistant() {
 
 
  /***************************************************************************
- *                                                                          *
- *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/20/2015                                        *
- *   Description        :   This function displays the link to Avalara        *
- *                          Production Admin Console.                         *
- *                            To be accessed from  Avatax ->Setting            *
- **********************************************e*****************************/
+  *                                                                          *
+  *   Function Header                                                        *
+  *                                                                          *
+  *   File Version       :                                                   *
+  *   Last Updated On    :   03/02/2021                                      *
+  *   Description        :   This function displays the link to Avalara      *
+  *                          Production Admin Console.                       *
+  *                            To be accessed from  Avatax ->Setting         *
+  ****************************************************************************/
 
 function fn_avatax_tax_calculation_admin_console_link()
 {
@@ -486,13 +486,13 @@ function fn_avatax_tax_calculation_admin_console_link()
 /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/20/2015                                        *
- *   Description        :   This function displays the link to Avalara        *
- *                          Nexus help.                         *
- *                            To be accessed from  Avatax ->Setting            *
- **********************************************e*****************************/
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   03/02/2021                                      *
+ *   Description        :   This function displays the link to Avalara      *
+ *                          Nexus help.                                     *
+ *                            To be accessed from  Avatax ->Setting         *
+ ****************************************************************************/
 function fn_avatax_tax_calculation_admin_nexus_link()
 {
     $text = '<div class="control-group setting-wide avatax_tax_calculation">
@@ -502,15 +502,15 @@ function fn_avatax_tax_calculation_admin_nexus_link()
 }
 
  /***************************************************************************
- *                                                                          *
- *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/20/2015                                        *
- *   Description        :   This function returns the Page URL via             *
- *                          curl library.                                     *
- *                                                                            *
- **********************************************e*****************************/
+  *                                                                          *
+  *   Function Header                                                        *
+  *                                                                          *
+  *   File Version       :                                                   *
+  *   Last Updated On    :   03/02/2021                                      *
+  *   Description        :   This function returns the Page URL via          *
+  *                          curl library.                                   *
+  *                                                                          *
+  ****************************************************************************/
 function curPageURL()
 {
     $pageURL = 'http';
@@ -524,95 +524,80 @@ function curPageURL()
         $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
     }
     return $pageURL;
-
 }
 
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/20/2015                                        *
- *   Description        :   This function returns the original price of        * 
- *                            product by product ID                            *
- *                                                                            *
- **********************************************e*****************************/
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   03/02/2021                                      *
+ *   Description        :   This function returns the original price of     * 
+ *                            product by product ID                         *
+ *                                                                          *
+ ****************************************************************************/
 function fn_product_real_price($product_id)
 {
-
-    $product_original_price = 0;
-
-    $product_original_price = db_get_field("SELECT price FROM ?:product_prices WHERE product_id = ?i AND lower_limit = 1", $product_id);
-
-    return $product_original_price;
+    return db_get_field("SELECT price FROM ?:product_prices WHERE product_id = ?i AND lower_limit = 1", $product_id);
 }
 
- /***************************************************************************
- *                                                                          *
- *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/20/2015                                        *
- *   Description        :   This function updates the AvaTax fields in order* 
- *                                                                            *
- **********************************************e*****************************/
+ /****************************************************************************
+  *                                                                          *
+  *   Function Header                                                        *
+  *                                                                          *
+  *   File Version       :                                                   *
+  *   Last Updated On    :    03/02/2021                                     *
+  *   Description        :   This function updates the AvaTax fields in order* 
+  *                                                                          *
+  ****************************************************************************/
  
 function fn_avatax_tax_calculation_update_order_with_avatax_fields($avatax_document_id, $avatax_transaction_id, $avatax_document_code, $avatax_error_message, $order_id)
 {
-
     db_query("UPDATE `?:orders` SET avatax_paytax_document_id = '" . (int)$avatax_document_id . "', avatax_paytax_transaction_id = '" . (int)$avatax_transaction_id . "', avatax_paytax_document_code = '" . (int)$avatax_document_code . "', avatax_paytax_error_message = '" . $avatax_error_message . "' WHERE order_id = '" . (int)$order_id . "'");
-
 }
 
 
- /***************************************************************************
- *                                                                          *
- *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
- *   Description        :   This function returns Doc Code from Return Order* 
- *                                                                            *
- **********************************************e*****************************/
+ /****************************************************************************
+  *                                                                          *
+  *   Function Header                                                        *
+  *                                                                          *
+  *   File Version       :                                                   *
+  *   Last Updated On    :    02/22/2015                                     *
+  *   Description        :   This function returns Doc Code from Return Order* 
+  *                                                                          *
+  ****************************************************************************/
  
 function fn_avatax_tax_calculation_get_return_order_doc_code($order_id)
 {
 
-    $return_order_doc_code = db_get_field("SELECT count(*) as total FROM ?:rma_returns WHERE order_id = ?i", $order_id);
-
-    return $return_order_doc_code;
+    return db_get_field("SELECT count(*) as total FROM ?:rma_returns WHERE order_id = ?i", $order_id);
 }
 
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
  *   Description        :   This function returns the ID of Return Reason   * 
- *                                                                            *
- **********************************************e*****************************/
+ *                                                                          *
+ ****************************************************************************/
  
 function fn_return_reason($return_reason_id)
 {
-
-    $return_reason = "";
-
-    $return_reason = db_get_field("SELECT property FROM ?:rma_property_descriptions WHERE property_id = ?i", $return_reason_id);
-
-    return $return_reason;
+    return db_get_field("SELECT property FROM ?:rma_property_descriptions WHERE property_id = ?i", $return_reason_id);
 }
 
 
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
  *   Description        :   This function returns the ID of Return Reason   * 
- *                                                                            *
- **********************************************e*****************************/
+ *                                                                          *
+ ****************************************************************************/
  
 function fn_edit_return_with_avatax_doccode($avatax_return_document_code, $return_id)
 {
@@ -631,30 +616,26 @@ function fn_edit_return_with_avatax_doccode($avatax_return_document_code, $retur
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
  *   Description        :   This function fetches the tax exemption details *
- *                          from the database table                            *
- **********************************************e*****************************/
- 
- 
+ *                          from the database table                         *
+ ****************************************************************************/
+
 function fn_get_tax_exemption_details($user_id)
 {
     $tax_exemption_details = db_get_row("SELECT tax_exempt, tax_exempt_number, tax_entity_usecode FROM ?:users WHERE user_id = ?i", $user_id);
         
     if ($tax_exemption_details["tax_exempt"] == 'Y') {
-        if ($tax_exemption_details['tax_exempt_number'] == "")
-        {
+        if ($tax_exemption_details['tax_exempt_number'] == "") {
             $tax_exemption_details['tax_exempt_number'] = "Exempt";
         }
         $tax_exemption_details['tax_entity_usecode'] = "";
     }
 
-
     if ($tax_exemption_details["tax_exempt"] == 'N') {
-        if ($tax_exemption_details['tax_entity_usecode'] == "-")
-        {
+        if ($tax_exemption_details['tax_entity_usecode'] == "-") {
             $tax_exemption_details['tax_entity_usecode'] = "";
         }
         $tax_exemption_details['tax_exempt_number'] = "";
@@ -668,19 +649,16 @@ function fn_get_tax_exemption_details($user_id)
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
  *   Description        :   This function fetches the timestamp when the    *
- *                          tax was computed for given Order ID                *
- **********************************************e*****************************/
+ *                          tax was computed for given Order ID             *
+ ****************************************************************************/
  
- function fn_avatax_tax_calculation_get_order_timestamp($order_id)
+function fn_avatax_tax_calculation_get_order_timestamp($order_id)
 {
-
-    $order_timestamp = db_get_field("SELECT timestamp FROM ?:orders WHERE order_id = ?i", $order_id);
-
-    return $order_timestamp;
+    return db_get_field("SELECT timestamp FROM ?:orders WHERE order_id = ?i", $order_id);
 }
 
 #}
@@ -689,18 +667,16 @@ function fn_get_tax_exemption_details($user_id)
 /** [ORDER STATUS CHANGES FUNCTIONS] **/
 #{ Region STARTS
 
-
- /***************************************************************************
+/****************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
- *   Description        :   This function fetches document Status            *
- **********************************************e*****************************/
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
+ *   Description        :   This function fetches document Status           *
+ ****************************************************************************/
 function fn_get_avatax_document_status()
 {
-
     $order_statuses = fn_get_statuses(STATUSES_ORDER, array(), true);
 
     $avatax_document_status = array();
@@ -716,14 +692,13 @@ function fn_get_avatax_document_status()
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                     *
  *   Description        :   This function fetches document Status            *
- **********************************************e*****************************/
+ ****************************************************************************/
 function fn_get_avatax_return_status()
 {
-
     $order_statuses = fn_get_statuses(STATUSES_RETURN, array(), true);
 
     $avatax_document_status = array();
@@ -739,14 +714,13 @@ function fn_get_avatax_return_status()
  /***************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
  *   Description        :   This function sets Document State = void        *
- **********************************************e*****************************/
+ ****************************************************************************/
 function fn_document_state_voided($order_info, $status_from)
 {
-
     $AvaTaxDocumentStatus = fn_get_avatax_document_status();
 
     if (trim($AvaTaxDocumentStatus[$status_from]) == "Committed") {
@@ -770,20 +744,18 @@ function fn_document_state_voided($order_info, $status_from)
     }
 }
 
-
- /***************************************************************************
+/****************************************************************************
  *                                                                          *
  *   Function Header                                                        *
- *                                                                           *
- *   File Version       :                                                    *
- *   Last Updated On    :    02/22/2015                                        *
- *   Description        :   This function changes                             *
-*                            Document State = Uncommitted                    *
- **********************************************e*****************************/
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
+ *   Description        :   This function changes                           *
+ *                          Document State = Uncommitted                    *
+ ****************************************************************************/
  
 function fn_document_state_uncommitted($order_info, $status_from)
 {
-
     $AvaTaxDocumentStatus = fn_get_avatax_document_status();
 
     if (trim($AvaTaxDocumentStatus[$status_from]) == "Committed") {
@@ -810,17 +782,16 @@ function fn_document_state_uncommitted($order_info, $status_from)
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :   This function changes                             *
-*                            Document State = Committed                        *
-****************************************************************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :   02/03/2021                                      *
+ *   Description        :   This function changes                           *
+ *                          Document State = Committed                      *
+ ****************************************************************************/
 function fn_document_state_committed($order_info, $status_from)
 {
-
     $AvaTaxDocumentStatus = fn_get_avatax_document_status();
 
     if (trim($AvaTaxDocumentStatus[$status_from]) == "Committed") {
@@ -832,9 +803,6 @@ function fn_document_state_committed($order_info, $status_from)
             //3. Call GetTax with Commit = False
             $DocCommittedReturn = fn_avatax_tax_calculation_avatax_gettax_commit($order_info, 1);
         }
-
-
-
     } else if (trim($AvaTaxDocumentStatus[$status_from]) == "Voided") {
         //1. Call CancelTax with CancelCode = DocDeleted
         $DocDeletedReturn = fn_avatax_tax_calculation_avatax_canceltax($order_info["avatax_paytax_document_code"], "DocDeleted");
@@ -848,23 +816,19 @@ function fn_document_state_committed($order_info, $status_from)
     }
 }
 
-
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
+*                                                                           *
+*   Function Header                                                         *
 *                                                                           *
 *   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function changes                             *
-*                            Document State to the desired state as per the    *
-*                           passed second parameter                            *
-**********************************************e*****************************/
+*   Last Updated On    :    02/03/2021                                      *
+*   Description        :    This function changes                           *
+*                           Document State to the desired state as per the  *
+*                           passed second parameter                         *
+****************************************************************************/
 
 function fn_avatax_change_document_status($order_info,$status_to, $status_from, $order_id = 0)
 {
-    
-            
-            
     Switch ($status_to) {
         case 'P': //Processed
             fn_document_state_committed($order_info, $status_from);
@@ -887,7 +851,6 @@ function fn_avatax_change_document_status($order_info,$status_to, $status_from, 
         case 'I': //Canceled
             fn_document_state_voided($order_info, $status_from);
             break;
-        
         default: //Default
             //fn_document_state_committed($order_info, $status_from);
             break;
@@ -900,31 +863,26 @@ function fn_avatax_change_document_status($order_info,$status_to, $status_from, 
 /** [AVATAX API CALLS FUNCTIONS] **/
 #{
 
-
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
+*                                                                           *
+*   Function Header                                                         *
 *                                                                           *
 *   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function calculate the Taxable Amount        *
+*   Last Updated On    :    02/03/2021                                      *
+*   Description        :    This function calculate the Taxable Amount      *
 *                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
+*   Important (on Feb25):    Removed all commented code from this function  *
 *                                                                           *
-**********************************************e*****************************/
+****************************************************************************/
 
 function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rates, $company_id, $cart, $auth)
-{
-    
- 
-    $timeStamp             =     new DateTime();                        // Create Time Stamp
+{ 
+    $timeStamp = new DateTime();
     $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
 
-    $environment = 'Development';
-   
     $company_details = fn_get_company_placement_info($company_id);
 
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
@@ -933,9 +891,7 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
     $client = CLIENT_NAME;
     $CompanyCode = Registry::get('addons.avatax_tax_calculation.avatax_company_code');
 
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = (strpos($service_url, "development") === false) ? 'Production' : 'Development';
 
     new ATConfig($environment, array('url' => $service_url, 'account' => $account, 'license' => $license, 'client' => $client, 'trace' => TRUE));
 
@@ -962,14 +918,12 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
         $DestCountry = $user_info['s_country'];
     }
 
-
     $DocType = "SalesOrder";
     $a = session_id();
     if (empty($a)) session_start();
 
-    
     $DocCode=$order_info['order_id'];
-    if ($DocCode=="")
+    if ($DocCode == "")
     {
         $DocCode = session_id();
     }    
@@ -1006,7 +960,6 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
     $request->setLocationCode($LocationCode);
     $request->setCurrencyCode(CART_PRIMARY_CURRENCY);
     $request->setCommit(FALSE);
-    
     
     //Add Origin Address
     $origin = new Address();
@@ -1099,7 +1052,6 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
     }
     $shipping_id = $cart['chosen_shipping'][0];
     if (isset($shipping_id[0]) || isset($shipping_id)) {
-
         $TaxCode = db_get_field("SELECT `tax_code` FROM ?:shippings WHERE `shipping_id` = $shipping_id");
         if ($TaxCode == "none") {
             $TaxCode = 'FR';
@@ -1159,24 +1111,19 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
                    
                     $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
                 if ($log_mode==1) {
-                    $params                =   '[Input: ' . ']';        // Create Param List
-                    $u_name                =    '';                            // Eventually will come from $_SESSION[] object
+                    $params = '[Input: ' . ']'; // Create Param List
+                    $u_name = ''; // Eventually will come from $_SESSION[] object
                     $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastRequest());        // Create System Log
-                    $application_log->WriteSystemLogToFile();            // Log info goes to log file
+                    $application_log->WriteSystemLogToFile(); // Log info goes to log file
 
                     $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastResponse());        // Create System Log
-                    $application_log->WriteSystemLogToFile();            // Log info goes to log file
+                    $application_log->WriteSystemLogToFile(); // Log info goes to log file
                     //$application_log->metric('GetTax '.$getTaxResult->getDocType(),count($getTaxResult->getTaxLines()),$getTaxResult->getDocCode(),$connectortime,$latency);
 
-                    //    $application_log->WriteSystemLogToDB();                            // Log info goes to DB
+                    //    $application_log->WriteSystemLogToDB(); // Log info goes to DB
                     //     System Logger ends here
                     //    Logging code snippet (optional) ends here
-                }
-                else{}
-                
-
-        
-        
+                } 
 
                 // If NOT success - display error messages to console
                 // it is important to iterate through the entire message class
@@ -1199,24 +1146,23 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
         $avatax_tax_error = '<div class="warning">' . $return_message . '</div>';
         fn_set_notification('E', __('error'), $avatax_tax_error);
         return 0;
-
     } //Comment this line to return SOAP XML
 }
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function validates the give address        *
-*   Description            :      along with order info                            *
-*                                                                           *
-*   Important (on Feb25):    To be removed                                     *    
-*                            all commented code from this function            *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function validates the give address       *
+ *   Description        :    along with order info                          *
+ *                                                                          *
+ *   Important (on Feb25):    To be removed                                 *    
+ *                            all commented code from this function         *
+ *                                                                          *
+ ****************************************************************************/
 
 
 function fn_avatax_tax_calculation_avatax_address_validation($user_data)
@@ -1265,27 +1211,26 @@ function fn_avatax_tax_calculation_avatax_address_validation($user_data)
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function serves as the wrapper function    *
-*                           for AvaTax GetTax() Call                        *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function serves as the wrapper function   *
+ *                           for AvaTax GetTax() Call                       *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
 {
-    $timeStamp             =     new DateTime();                        // Create Time Stamp
+    $timeStamp = new DateTime();                        // Create Time Stamp
     $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
 
-    $environment = 'Development';
     $company_details = fn_get_company_placement_info($order_info['company_id']);
 
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
@@ -1294,9 +1239,7 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
     $client = CLIENT_NAME;
     $CompanyCode = Registry::get('addons.avatax_tax_calculation.avatax_company_code');
 
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = strpos($service_url, "development") === false ? 'Production' : 'Development';
 
     new ATConfig($environment, array('url' => $service_url, 'account' => $account, 'license' => $license, 'client' => $client, 'trace' => TRUE));
 
@@ -1317,14 +1260,7 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
     $DestCountry = $order_info["s_country"];
     
     //Code Added for Implementation of Doc Sav Feature in CS Cart 4.2.4 Build
-    if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1)
-    {
-        $DocType = "SalesInvoice";
-    }
-    else
-    {
-        $DocType = "SalesOrder";
-    }
+    $DocType = Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1 ? "SalesInvoice" : "SalesOrder";
     $DocCode = $order_info['order_id'];
     $SalesPersonCode = "";
     $EntityUseCode = "";
@@ -1596,28 +1532,27 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function serves as the wrapper function    *
-*                           for AvaTax GetTax() Call                        *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function serves as the wrapper function   *
+ *                           for AvaTax GetTax() Call                       *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_status)
 {
-    $timeStamp             =     new DateTime();                        // Create Time Stamp
+    $timeStamp = new DateTime();                        // Create Time Stamp
     $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
    
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
 
-    $environment = 'Development';
     $company_details = fn_get_company_placement_info($order_info['company_id']);
 
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
@@ -1625,15 +1560,12 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
     $license = Registry::get('addons.avatax_tax_calculation.avatax_license_key');
     $client = CLIENT_NAME;
 
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = strpos($service_url, "development") === false ? 'Production' : 'Development';
 
     new ATConfig($environment, array('url' => $service_url, 'account' => $account, 'license' => $license, 'client' => $client, 'trace' => TRUE));
 
     //Variable Mapping
     $CustomerCode = $order_info["user_id"];
-
 
     $OrigAddress = $company_details["company_address"];
     $OrigCity = $company_details["company_city"];
@@ -1648,14 +1580,7 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
     $DestCountry = $order_info["s_country"];
 
     $CompanyCode = Registry::get('addons.avatax_tax_calculation.avatax_company_code');
-    if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1)
-    {
-        $DocType = "SalesInvoice";
-    }
-    else
-    {
-        $DocType = "SalesOrder";
-    }
+    $DocType = Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1 ? "SalesInvoice" : "SalesOrder";
     $DocCode = $order_info["order_id"];
     $SalesPersonCode = "";
     $EntityUseCode = "";
@@ -1730,51 +1655,36 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
     $avatax_discount_amount = 0;
     $auth = & $_SESSION['auth'];
     foreach ($order_info['products'] as $k => $v) {
-
-        
         $product_original_amount = fn_product_real_price($v["product_id"]);
-        
         $total_amount = ($v["price"] * $v["amount"]);
-
         $product_data = fn_get_product_data($v["product_id"], $auth);
-        
         $product_categories = "";
         foreach ($product_data['category_ids'] as $pck => $pcv) {
             $product_categories .= fn_get_category_name($pcv) . ",";
         }
         $Description = $product_categories;
-
         $TaxCode = $product_data["tax_code"];
-
         if ($TaxCode == "none") {
             $TaxCode = 'P0000000';
         }
 
-
         /////////////////////// UPC Implementation - Start /////////////////////////
         // Receiving UPC Code if set
         $UpcCode = $product_data['upc_code'];
-        if (Registry::get('addons.avatax_tax_calculation.avatax_tax_upc') == 1)
-        {
+        if (Registry::get('addons.avatax_tax_calculation.avatax_tax_upc') == 1) {
             if  ( ($UpcCode == "") || ($UpcCode == "none") ) {
                 if ($v["product_code"] == "") {
                     $itemCode = substr($v["product"], 0, 50);
-                }
-                else{
+                } else{
                     $itemCode  = $v["product_code"];
                 }
-            }
-            else
-            {
+            } else {
                 // UPC Code validation logic will come here : Future
                 $itemCode = 'UPC:' . $UpcCode;
             }
-        }
-        else if ($v["product_code"] == "")
-        {
+        } else if ($v["product_code"] == "") {
             $itemCode  = substr($v["product"], 0, 50);
-        }
-        else{
+        } else{
             $itemCode  = $v["product_code"];
         }
         /////////////////////// UPC Implementation - End /////////////////////////
@@ -1788,17 +1698,13 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
 
 
         $line1 = new Line();
-       
         $line1->setNo($i + 1);
-       
         $line1->setItemCode($itemCode);
         $line1->setDescription($v["product"]);
         $line1->setTaxCode($TaxCode);
         $line1->setQty($v["amount"]);
-      
         $line1->setAmount($total_amount);
         $line1->setDiscounted(true);
-      
         $line1->setRevAcct($RevAcct);
         $line1->setRef1($Ref1);
         $line1->setRef2($Ref2);
@@ -1825,7 +1731,6 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
         }
         $line1 = new Line();
         $line1->setNo($i + 1);
-      
         $line1->setItemCode("Shipping");
         $line1->setDescription($order_shipment['shipping']);
         $line1->setTaxCode($TaxCode);
@@ -1845,23 +1750,19 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
         $shipping_count++;
     }
 
-   
     $request->setLines($lines);
- 
     $GetTaxData = array();
     $returnMessage = "";
 
     try {
-        
         $connectortime = round(microtime(true) * 1000)-$time_start;
         $latency = round(microtime(true) * 1000);
-        $connectorcalling=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+        $connectorcalling = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
         $getTaxResult = $client->getTax($request);
-        $connectorcomplete=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+        $connectorcomplete = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
         $latency = round(microtime(true) * 1000)-$latency;
         // Error Trapping
         if ($getTaxResult->getResultCode() == SeverityLevel::$Success) {
-
             $GetTaxData['GetTaxDocCode'] = $getTaxResult->getDocCode();
             $GetTaxData['GetTaxDocDate'] = $getTaxResult->getDocDate();
             $GetTaxData['GetTaxTotalAmount'] = $getTaxResult->getTotalAmount();
@@ -1871,22 +1772,21 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
              * getLastRequest
              * getLastResponse
              */
-              /************* Logging code snippet (optional) starts here *******************/
-                // System Logger starts here:
-                require_once "SystemLogger.php";
-                // Creating the System Logger Object
-                $application_log     =     new SystemLogger;
-                $connectorend=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
-                $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
-                $performance_metrics[] = array($connectorstart,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax Start Time-\"".$connectorstart,$account,$getTaxResult->getDocCode(),"GetTax",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-                $performance_metrics[] = array($connectorcalling,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax End Time-\"".$connectorcalling,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-                $performance_metrics[] = array($connectorcomplete,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax Start Time-\"".$connectorcomplete,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-                $performance_metrics[] = array($connectorend,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax End Time-\"".$connectorend,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-                //Call serviceLog function
-                $returnServiceLog = $application_log->serviceLog($performance_metrics);
-                
-                $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
-                if ($log_mode==1) {
+            /************* Logging code snippet (optional) starts here *******************/
+            // System Logger starts here:
+            require_once "SystemLogger.php";
+            // Creating the System Logger Object
+            $application_log = new SystemLogger;
+            $connectorend=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+            $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
+            $performance_metrics[] = array($connectorstart,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax Start Time-\"".$connectorstart,$account,$getTaxResult->getDocCode(),"GetTax",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+            $performance_metrics[] = array($connectorcalling,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax End Time-\"".$connectorcalling,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+            $performance_metrics[] = array($connectorcomplete,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax Start Time-\"".$connectorcomplete,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+            $performance_metrics[] = array($connectorend,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax End Time-\"".$connectorend,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+            //Call serviceLog function
+            $returnServiceLog = $application_log->serviceLog($performance_metrics);
+            
+            if (Registry::get('addons.avatax_tax_calculation.avatax_log_mode') == 1) {
                 $params                =   '[Input: ' . ']';        // Create Param List
                 $u_name                =    '';                            // Eventually will come from $_SESSION[] object
                 $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastRequest());        // Create System Log
@@ -1901,16 +1801,13 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
                 //     System Logger ends here
                 //    Logging code snippet (optional) ends here
             }
-            else{}
                 
             return $GetTaxData;
 
         } else {
-
             if ($getTaxResult->getResultCode() == SeverityLevel::$Error) {
                 $return_message = "<b>AvaTax - Error Message</b><br/>";
-                foreach($getTaxResult->getMessages() as $msg)
-                {
+                foreach($getTaxResult->getMessages() as $msg) {
                     $return_message .= $msg->getSummary()."<br/>";
                 }
                 $avatax_tax_error = '<div class="warning">' . $return_message . '</div>';
@@ -1945,27 +1842,22 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function serves as the wrapper function    *
-*                           for AvaTax PostTax() Call                        *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
-
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function serves as the wrapper function   *
+ *                           for AvaTax PostTax() Call                      *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_avatax_posttax($GetTaxReturnValue)
 {
-    $environment = 'Development';
-   
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = strpos($service_url, "development") === false ? 'Production' : 'Development';
 
     $order_data = array();
     $dateTime = new DateTime();
@@ -1996,28 +1888,24 @@ function fn_avatax_tax_calculation_avatax_posttax($GetTaxReturnValue)
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function serves as the wrapper function    *
-*                           for AvaTax CancelTax() Call                        *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function serves as the wrapper function   *
+ *                           for AvaTax CancelTax() Call                    *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_avatax_canceltax($AvaTaxDocumentCode, $CancelCode, $DocType = "SalesInvoice")
 {
     //echo $AvaTaxDocumentCode;
    
-    $environment = 'Development';
-   
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = strpos($service_url, "development") === false ? 'Production' : 'Development';
 
     $order_data = array();
     $dateTime = new DateTime();
@@ -2043,28 +1931,23 @@ function fn_avatax_tax_calculation_avatax_canceltax($AvaTaxDocumentCode, $Cancel
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function fetches gettax history for the    *
-*                           sent order details                                *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function fetches gettax history for the   *
+ *                           sent order details                             *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 
 
 function fn_avatax_tax_calculation_avatax_gettax_history($order_info)
 {
-
-    $environment = 'Development';
-    
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = strpos($service_url, "development") === false ? 'Production' : 'Development';
 
     $company_details = fn_get_company_placement_info($order_info['company_id']);
 
@@ -2092,28 +1975,27 @@ function fn_avatax_tax_calculation_avatax_gettax_history($order_info)
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function does tax computation on            *
-*                           sent return invoice details                        *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function does tax computation on          *
+ *                           sent return invoice details                    *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_info, $tax_history_data)
 {
-    $timeStamp             =     new DateTime();                        // Create Time Stamp
-    $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+    $timeStamp = new DateTime(); // Create Time Stamp
+    $connectorstart = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
     
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
 
-    $environment = 'Development';
     $company_details = fn_get_company_placement_info($order_info['company_id']);
 
     $service_url = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
@@ -2121,10 +2003,7 @@ function fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_in
     $license = Registry::get('addons.avatax_tax_calculation.avatax_license_key');
     $client = CLIENT_NAME;
     $CompanyCode = Registry::get('addons.avatax_tax_calculation.avatax_company_code');
-
-    $pos = strpos($service_url, "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
+    $environment = strpos($service_url, "development") === false ? 'Production' : 'Development';
 
     new ATConfig($environment, array('url' => $service_url, 'account' => $account, 'license' => $license, 'client' => $client, 'trace' => TRUE));
 
@@ -2144,19 +2023,12 @@ function fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_in
     $DestCountry = $order_info["s_country"];
     
     //Code Added to implement Doc Type Feature in CS Cart 4.2.4 build)
-    if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1)
-    {
-        $DocType = "ReturnInvoice";
-    }
-    else
-    {
-        $DocType = "ReturnOrder";
-    }
+    $DocType = Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1 ? "ReturnInvoice" : "ReturnOrder";
     $DocCode = $return_info["avatax_return_document_code"];
 
     $SalesPersonCode = "";
     $EntityUseCode = "";
-    $Discount = 0;//$order_info['subtotal_discount'];
+    $Discount = 0; //$order_info['subtotal_discount'];
     $PurchaseOrderNo = '';
     $ExemptionNo = "";
     $LocationCode = '';
@@ -2229,200 +2101,187 @@ function fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_in
     $return_order_array = $return_info['items'];
     $accepted_items = $return_order_array['A'];
     
-   if (count($accepted_items)>0) {
-            foreach ($accepted_items as $key_inner => $value_inner) {
+    if (count($accepted_items) > 0) {
+        foreach ($accepted_items as $key_inner => $value_inner) {
 
-                $v = $order_info["products"][$key_inner];
+            $v = $order_info["products"][$key_inner];
 
-                $return_reason = fn_return_reason($value_inner["reason"]);
-                $product_original_amount = fn_product_real_price($value_inner["product_id"]);
-                
-                $total_amount = ($value_inner["price"] * $value_inner["amount"]);
+            $return_reason = fn_return_reason($value_inner["reason"]);
+            $product_original_amount = fn_product_real_price($value_inner["product_id"]);
+            
+            $total_amount = ($value_inner["price"] * $value_inner["amount"]);
 
-                $product_data = fn_get_product_data($value_inner["product_id"], $auth);
-                $product_categories = "";
-                foreach ($product_data['category_ids'] as $pck => $pcv) {
-                    $product_categories .= fn_get_category_name($pcv) . ",";
-                }
-                $Description = $product_categories;
+            $product_data = fn_get_product_data($value_inner["product_id"], $auth);
+            $product_categories = "";
+            foreach ($product_data['category_ids'] as $pck => $pcv) {
+                $product_categories .= fn_get_category_name($pcv) . ",";
+            }
+            $Description = $product_categories;
 
-                $TaxCode = $product_data["tax_code"];
+            $TaxCode = $product_data["tax_code"];
 
-                if ($TaxCode == "none") {
-                    $TaxCode = 'P0000000';
-                }
-
-                /////////////////////// UPC Implementation - Start /////////////////////////
-                // Receiving UPC Code if set 
-                $UpcCode = $product_data['upc_code'];
-                if (Registry::get('addons.avatax_tax_calculation.avatax_tax_upc') == 1)
-                {
-                    if  ( ($UpcCode == "") || ($UpcCode == "none") ) {
-                        if ($product_data["product_code"] == "") {
-                            $itemCode = substr($product_data["product"], 0, 50);
-                        }
-                        else{
-                            $itemCode  = $product_data["product_code"];
-                        }
-                    }
-                    else
-                    {
-                        // UPC Code validation logic will come here : Future
-                        $itemCode = 'UPC:' . $UpcCode;
-                    }
-                }
-                else if ($product_data["product_code"] == "")
-                {
-                    $itemCode  = substr($product_data["product"], 0, 50);
-                }
-                else{
-                    $itemCode  = $product_data["product_code"];
-                }
-                /////////////////////// UPC Implementation - End /////////////////////////
-
-
-                $discount_count = 0;
-                $temp_discount_amount = $product_original_amount - $value_inner["price"];
-                if ($temp_discount_amount > 0) {
-                    $discount_count = 1;
-                    $discount_amount = $value_inner["price"];
-                }
-
-                $line1 = new Line();
-                $line1->setNo($i+1);//$product["product_id"]
-               
-                $line1->setItemCode($itemCode);
-                $line1->setDescription($value_inner["product"]);
-                $line1->setTaxCode($TaxCode);
-             
-                $line1->setQty($value_inner["amount"]);
-               
-                $line1->setAmount(-$total_amount);
-                $line1->setDiscounted(true);
-                
-                $line1->setRevAcct($RevAcct);
-                $line1->setRef1($Ref1);
-                $line1->setRef2($Ref2);
-                $line1->setExemptionNo($ExemptionNo);
-                $line1->setCustomerUsageType($EntityUseCode);
-                $line1->setOriginAddress($origin);
-                $line1->setDestinationAddress($destination);
-
-                $lines[$i] = $line1;
-                $i++;
-
-               
-                $product_total += $value_inner['amount'];
+            if ($TaxCode == "none") {
+                $TaxCode = 'P0000000';
             }
 
+            /////////////////////// UPC Implementation - Start /////////////////////////
+            // Receiving UPC Code if set 
+            $UpcCode = $product_data['upc_code'];
+            if (Registry::get('addons.avatax_tax_calculation.avatax_tax_upc') == 1)
+            {
+                if  ( ($UpcCode == "") || ($UpcCode == "none") ) {
+                    if ($product_data["product_code"] == "") {
+                        $itemCode = substr($product_data["product"], 0, 50);
+                    }
+                    else{
+                        $itemCode  = $product_data["product_code"];
+                    }
+                }
+                else
+                {
+                    // UPC Code validation logic will come here : Future
+                    $itemCode = 'UPC:' . $UpcCode;
+                }
+            }
+            else if ($product_data["product_code"] == "")
+            {
+                $itemCode  = substr($product_data["product"], 0, 50);
+            }
+            else{
+                $itemCode  = $product_data["product_code"];
+            }
+            /////////////////////// UPC Implementation - End /////////////////////////
 
+
+            $discount_count = 0;
+            $temp_discount_amount = $product_original_amount - $value_inner["price"];
+            if ($temp_discount_amount > 0) {
+                $discount_count = 1;
+                $discount_amount = $value_inner["price"];
+            }
+
+            $line1 = new Line();
+            $line1->setNo($i+1);//$product["product_id"]
+            
+            $line1->setItemCode($itemCode);
+            $line1->setDescription($value_inner["product"]);
+            $line1->setTaxCode($TaxCode);
+            
+            $line1->setQty($value_inner["amount"]);
+            
+            $line1->setAmount(-$total_amount);
+            $line1->setDiscounted(true);
+            
+            $line1->setRevAcct($RevAcct);
+            $line1->setRef1($Ref1);
+            $line1->setRef2($Ref2);
+            $line1->setExemptionNo($ExemptionNo);
+            $line1->setCustomerUsageType($EntityUseCode);
+            $line1->setOriginAddress($origin);
+            $line1->setDestinationAddress($destination);
+
+            $lines[$i] = $line1;
+            $i++;
+
+            
+            $product_total += $value_inner['amount'];
+        }
     //}
 
-   
-    $request->setLines($lines);
-  
-    $TaxOverride = new TaxOverride();
-   
-    $TaxOverride->setTaxOverrideType("TaxDate");
-    $TaxOverride->setTaxDate($tax_history_data["DocDate"]);
-    $TaxOverride->setReason($return_reason);
-    $request->setTaxOverride($TaxOverride);
-
-    $GetTaxData = array();
-    $returnMessage = "";
-
-    try {
-        $connectortime = round(microtime(true) * 1000)-$time_start;
-        $latency = round(microtime(true) * 1000);
-        $connectorcalling=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
-        $getTaxResult = $client->getTax($request);
-        $connectorcomplete=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
-        $latency = round(microtime(true) * 1000)-$latency;
-
-        // Error Trapping
-        if ($getTaxResult->getResultCode() == SeverityLevel::$Success) {
-
-            $GetTaxData['GetTaxDocCode'] = $getTaxResult->getDocCode();
-            $GetTaxData['GetTaxDocDate'] = $getTaxResult->getDocDate();
-            $GetTaxData['GetTaxTotalAmount'] = $getTaxResult->getTotalAmount();
-            $GetTaxData['GetTaxTotalTax'] = $getTaxResult->getTotalTax();
-            /***
-             * Place holder for logs
-             * getLastRequest
-             * getLastResponse
-             */
-             
-              /************* Logging code snippet (optional) starts here *******************/
-                // System Logger starts here:
-            include_once "SystemLogger.php";
-            // Creating the System Logger Object
-            $application_log     =     new SystemLogger;
-            
-            $connectorend=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
-            $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
-            $performance_metrics[] = array($connectorstart,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax Start Time-\"".$connectorstart,$account,$getTaxResult->getDocCode(),"GetTax",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-            $performance_metrics[] = array($connectorcalling,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax End Time-\"".$connectorcalling,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-            $performance_metrics[] = array($connectorcomplete,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax Start Time-\"".$connectorcomplete,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-            $performance_metrics[] = array($connectorend,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax End Time\"".$connectorend,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
-            //Call serviceLog function
-            $returnServiceLog = $application_log->serviceLog($performance_metrics);
+        $request->setLines($lines);
     
-            $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
-            if ($log_mode==1) {
-                $params                =   '[Input: ' . ']';        // Create Param List
-                $u_name                =    '';                            // Eventually will come from $_SESSION[] object
-                $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastRequest());        // Create System Log
-                $application_log->WriteSystemLogToFile();            // Log info goes to log file
+        $TaxOverride = new TaxOverride();
+    
+        $TaxOverride->setTaxOverrideType("TaxDate");
+        $TaxOverride->setTaxDate($tax_history_data["DocDate"]);
+        $TaxOverride->setReason($return_reason);
+        $request->setTaxOverride($TaxOverride);
 
-                $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastResponse());        // Create System Log
-                $application_log->WriteSystemLogToFile();            // Log info goes to log file
-               // $application_log->metric('GetTax '.$getTaxResult->getDocType(),count($getTaxResult->getTaxLines()),$getTaxResult->getDocCode(),$connectortime,$latency);
+        $GetTaxData = array();
+        $returnMessage = "";
 
+        try {
+            $connectortime = round(microtime(true) * 1000) - $time_start;
+            $latency = round(microtime(true) * 1000);
+            $connectorcalling=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+            $getTaxResult = $client->getTax($request);
+            $connectorcomplete=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+            $latency = round(microtime(true) * 1000)-$latency;
 
-                //    $application_log->WriteSystemLogToDB();                            // Log info goes to DB
-                //     System Logger ends here
-                //    Logging code snippet (optional) ends here
+            // Error Trapping
+            if ($getTaxResult->getResultCode() == SeverityLevel::$Success) {
+                $GetTaxData['GetTaxDocCode'] = $getTaxResult->getDocCode();
+                $GetTaxData['GetTaxDocDate'] = $getTaxResult->getDocDate();
+                $GetTaxData['GetTaxTotalAmount'] = $getTaxResult->getTotalAmount();
+                $GetTaxData['GetTaxTotalTax'] = $getTaxResult->getTotalTax();
+                /***
+                 * Place holder for logs
+                 * getLastRequest
+                 * getLastResponse
+                 */
+                
+                /************* Logging code snippet (optional) starts here *******************/
+                // System Logger starts here:
+                include_once "SystemLogger.php";
+                // Creating the System Logger Object
+                $application_log     =     new SystemLogger;
+                
+                $connectorend=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+                $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
+                $performance_metrics[] = array($connectorstart,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax Start Time-\"".$connectorstart,$account,$getTaxResult->getDocCode(),"GetTax",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+                $performance_metrics[] = array($connectorcalling,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax End Time-\"".$connectorcalling,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+                $performance_metrics[] = array($connectorcomplete,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax Start Time-\"".$connectorcomplete,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+                $performance_metrics[] = array($connectorend,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PostGetTax End Time\"".$connectorend,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
+                //Call serviceLog function
+                $returnServiceLog = $application_log->serviceLog($performance_metrics);
+        
+                if (Registry::get('addons.avatax_tax_calculation.avatax_log_mode') == 1) {
+                    $params = '[Input: ' . ']'; // Create Param List
+                    $u_name = ''; // Eventually will come from $_SESSION[] object
+                    $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastRequest());        // Create System Log
+                    $application_log->WriteSystemLogToFile(); // Log info goes to log file
+
+                    $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastResponse());        // Create System Log
+                    $application_log->WriteSystemLogToFile(); // Log info goes to log file
+                    // $application_log->metric('GetTax '.$getTaxResult->getDocType(),count($getTaxResult->getTaxLines()),$getTaxResult->getDocCode(),$connectortime,$latency);
+                    //    $application_log->WriteSystemLogToDB();                            // Log info goes to DB
+                    //     System Logger ends here
+                    //    Logging code snippet (optional) ends here
+                }
+
+                return $GetTaxData;
+
+            } else {
+                $return_message = "<b>AvaTax - Error Message</b><br/>";
+                foreach ($getTaxResult->getMessages() as $msg) {
+                    $return_message .= $msg->getName() . ": " . $msg->getSummary() . "\n";
+                }
+
+                $avatax_tax_error = '<div class="warning">' . $return_message . '</div>';
+                fn_set_notification('E', __('error'), $avatax_tax_error);
+                return $getTaxResult;
             }
-            else{}
-
-                
-                
-            return $GetTaxData;
-
-        } else {
+        } catch (SoapFault $exception) {
+            $msg = "Exception: ";
+            if ($exception)
+                $msg .= $exception->faultstring;
 
             $return_message = "<b>AvaTax - Error Message</b><br/>";
-            foreach ($getTaxResult->getMessages() as $msg) {
-                $return_message .= $msg->getName() . ": " . $msg->getSummary() . "\n";
-            }
-
+            $return_message .= $msg;
             $avatax_tax_error = '<div class="warning">' . $return_message . '</div>';
             fn_set_notification('E', __('error'), $avatax_tax_error);
-            return $getTaxResult;
-        }
-    } catch (SoapFault $exception) {
-        $msg = "Exception: ";
-        if ($exception)
-            $msg .= $exception->faultstring;
 
-        $return_message = "<b>AvaTax - Error Message</b><br/>";
-        $return_message .= $msg;
-        $avatax_tax_error = '<div class="warning">' . $return_message . '</div>';
-        fn_set_notification('E', __('error'), $avatax_tax_error);
+            // If you desire to retrieve SOAP IN / OUT XML
+            //  - Follow directions below
+            //  - if not, leave as is
 
-        // If you desire to retrieve SOAP IN / OUT XML
-        //  - Follow directions below
-        //  - if not, leave as is
-
-        //echo $msg . "\n";
-        return $msg;
-        //    }   //UN-comment this line to return SOAP XML
-    } //Comment this line to return SOAP XML
-    /**/
-   }//end of if 
-   else{
+            //echo $msg . "\n";
+            return $msg;
+            //    }   //UN-comment this line to return SOAP XML
+        } //Comment this line to return SOAP XML
+    } else{
        return fn_avatax_tax_calculation_avatax_canceltax($return_info['avatax_return_document_code'], "DocVoided", "ReturnInvoice");
-   }
+    }
 }
 
 #}
@@ -2432,29 +2291,25 @@ function fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_in
 
 #{
 
-
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function invoke the posttax()                *
-*                                                                           *
-*                                                                           *
-*   Important (on Feb25):    Removed all commented code from this function    *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function invoke the posttax()             *
+ *                                                                          *
+ *   Important (on Feb25):    Removed all commented code from this function *
+ *                                                                          *
+ ****************************************************************************/
 function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, $shipping_rates, $auth, &$calculated_data)
 {
-   
     $user_info = fn_get_user_info($auth['user_id']);
     $user_data = $cart['user_data'];
-    $ava_tax_flag="";
-    $avatax_product_taxes="";
-    $company_id=0;
-    if (isset($cart['chosen_shipping']) && !empty($cart['chosen_shipping']))
-    {    
+    $ava_tax_flag = "";
+    $avatax_product_taxes = "";
+    $company_id = 0;
+    if (isset($cart['chosen_shipping']) && !empty($cart['chosen_shipping'])) {    
         $shipping_id = $cart['chosen_shipping'][0];
     }
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
@@ -2467,14 +2322,11 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
     }
 
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1 && (isset($cart['payment_id']) && $cart['payment_id'] > 0) && (($ava_tax_flag == 'step_four') || (!empty($shipping_id)) || !$cart['shipping_required'] ) ) {
-
         $cart_products = $cart['products'];
-        if (isset($cart['avatax_tax_taxes']))
-        {    
+        if (isset($cart['avatax_tax_taxes'])) {    
             $avatax_product_taxes = $cart['avatax_tax_taxes'];
         }
-        if (!empty($cart_products[0]))
-        {    
+        if (!empty($cart_products[0])) {    
             $company_id = $cart_products[0]['company_id'];
         }
         $p_rate = 0;
@@ -2559,10 +2411,9 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
                 'P' => $p_rate,
                 'S' => $s_rate
             )
-        )
-        );
+        ));
        
-    }  else {
+    } else {
         $avatax_tax_id = 1;
         $calculated_data = array($avatax_tax_id => array(
             'rate_type' => 'P',
@@ -2577,26 +2428,22 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
                 'P' => 0,
                 'S' => 0
             )
-        )
-        );
+        ));
     }
 }
 
-
-
-
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      **** PENDING *****                                *
-*                                                                           *
-*                                                                           *
-*   Important (on Feb25):    *** Action Pending ***                            *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    **** PENDING *****                             *
+ *                                                                          *
+ *                                                                          *
+ *   Important (on Feb25):    *** Action Pending ***                        *
+ *                                                                          *
+ ****************************************************************************/
 
 //function fn_avatax_tax_calculation_post_add_to_cart($product_data, &$cart, $auth, $update)
 //{
@@ -2646,21 +2493,19 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function re-calculate the tax - once the     *
-*                           order is updated                                 *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function re-calculate the tax - once the  *
+ *                           order is updated                               *
+ ****************************************************************************/
 
 
 function fn_avatax_tax_calculation_update_order($order,$order_id) {
-
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) {
-        if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1)
-        {
+        if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1) {
             $order_info = fn_get_order_info($order_id);
             $order['order_id'] = $order_id;
             $order['avatax_paytax_document_code'] = $order_info['avatax_paytax_document_code'];
@@ -2668,23 +2513,19 @@ function fn_avatax_tax_calculation_update_order($order,$order_id) {
             $status_from = $order['order_status'];
             fn_avatax_change_document_status($order, $status_to, $status_from);
         }
-        else
-        {
-        }
-
     }
 }
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function calculates the tax on the placed    *
-*                           order                                             *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function calculates the tax on the placed *
+ *                           order                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_place_order($order_id, $action, $order_status, $cart, $auth)
 {
@@ -2698,9 +2539,8 @@ function fn_avatax_tax_calculation_place_order($order_id, $action, $order_status
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) {
         $order_info = fn_get_order_info($order_id);
 
-
-        if (isset($order_info['avatax_paytax_document_code'])) // This checking is to avoid call to AvaTax API when order is edited from the Admin
-        {
+        // This checking is to avoid call to AvaTax API when order is edited from the Admin
+        if (isset($order_info['avatax_paytax_document_code'])) {
             //Call 2 Methods
             //1. GetTax with OrderType = SalesInvoice
             $GetTaxReturnValue = fn_avatax_tax_calculation_avatax_gettax($order_info, $auth);
@@ -2738,20 +2578,18 @@ function fn_avatax_tax_calculation_place_order($order_id, $action, $order_status
     }
 }
 
-
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      ***** PENDING *****                                *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    ***** PENDING *****                            *
+ *                                                                          *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_is_user_exists_post($user_id, $user_data, $is_exist)
 {
-
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation') == 1) {
         //AvaTax - Address Validation - Check
         $avatax_tax_country = "";
@@ -2774,17 +2612,15 @@ function fn_avatax_tax_calculation_is_user_exists_post($user_id, $user_data, $is
     }
 }
 
-
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      Recalculate the tax when the order status is    *
-*                            changed from one state to another                *
-**********************************************e*****************************/
-
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    Recalculate the tax when the order status is   *
+ *                           changed from one state to another              *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
@@ -2820,10 +2656,9 @@ function fn_avatax_tax_calculation_change_order_status($status_to, $status_from,
     *****/
     //Code for address validation ends here.
 
-    if ((trim($status_from) != trim($status_to)) && Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) //This checking is to avoid more call to AvaTax API
-    {
-        if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1)
-        {
+    //This checking is to avoid more call to AvaTax API
+    if ((trim($status_from) != trim($status_to)) && Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) {
+        if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1) {
             if ($status_from == 'N') //This checking is to avoid more call to AvaTax API
             {
                 if ($status_to != 'O') {
@@ -2833,21 +2668,17 @@ function fn_avatax_tax_calculation_change_order_status($status_to, $status_from,
                 fn_avatax_change_document_status($order_info, $status_to, $status_from);
             }
         }
-        else
-        {
-
-        }
     }
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      **** PENDING *****                                *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    **** PENDING *****                             *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_send_return_mail_pre($return_info, $order_info)
 {
@@ -2864,24 +2695,21 @@ function fn_avatax_tax_calculation_send_return_mail_pre($return_info, $order_inf
         if (is_array($ReturnsReturnValue)) {
             fn_edit_return_with_avatax_doccode($ReturnsReturnValue['GetTaxDocCode'], $return_info['return_id']);
         }
-
     }
-
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
 *                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
+*   Function Header                                                         *
+*                                                                          *
+*   File Version       :                                                   *
+*   Last Updated On        :    02/03/2021                                     *
 *   Description            :      This function invokes CancelTax on return order    *
-**********************************************e*****************************/
+****************************************************************************/
 
 
 function fn_return_state_voided($return_info, $order_info,$status_from)
 {
-
     $AvaTaxDocumentStatus = fn_get_avatax_return_status();
 
     if (trim($AvaTaxDocumentStatus[$status_from]) == "Committed") {
@@ -2897,18 +2725,16 @@ function fn_return_state_voided($return_info, $order_info,$status_from)
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function invokes CancelTax on return order    *
-**********************************************e*****************************/
-
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function invokes CancelTax on return order*
+ ****************************************************************************/
 
 function fn_return_state_uncommitted($return_info, $order_info,$status_from)
 {
-
     $AvaTaxDocumentStatus = fn_get_avatax_return_status();
     $TaxHistoryReturnValue = fn_avatax_tax_calculation_avatax_gettax_history($order_info);
     if (trim($AvaTaxDocumentStatus[$status_from]) == "Committed") {
@@ -2936,17 +2762,16 @@ function fn_return_state_uncommitted($return_info, $order_info,$status_from)
 
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function invokes CancelTax on return order    *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function invokes CancelTax on return order*
+ ****************************************************************************/
 
 function fn_return_state_committed($return_info, $order_info,$status_from)
 {
-
     $AvaTaxDocumentStatus = fn_get_avatax_return_status();
     $TaxHistoryReturnValue = fn_avatax_tax_calculation_avatax_gettax_history($order_info);
     if (trim($AvaTaxDocumentStatus[$status_from]) == "Committed") {
@@ -2971,29 +2796,25 @@ function fn_return_state_committed($return_info, $order_info,$status_from)
     } else if (trim($AvaTaxDocumentStatus[$status_from]) == "Uncommitted") {
         //1. Call GetTax with Commit = True
         $DocCommittedReturn = fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_info, $TaxHistoryReturnValue);
-        
-        
     }
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :      This function changes the Return Status of        *
-*                            a return order                                    *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function changes the Return Status of     *
+ *                           a return order                                 *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_change_return_status($return_info, $order_info)
 {
-     
     $change_return_status = $_REQUEST['change_return_status'];
-      $status_from = $change_return_status['status_from'];
-     
+    $status_from = $change_return_status['status_from'];
     
-       if (Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) {
+    if (Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) {
         if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1)
         {
             Switch ($return_info['status']) {
@@ -3011,23 +2832,19 @@ function fn_avatax_tax_calculation_change_return_status($return_info, $order_inf
                     break;
             }
         }
-        else
-        {
-
-        }
     }
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    02/22/2015                                           *
-*   Description            :  This function feeds entity use code to           *
-*                          view from Database                                *
-*                                                                           *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    02/03/2021                                     *
+ *   Description        :    This function feeds entity use code to         *
+ *                           view from Database                             *
+ *                                                                          *
+ ****************************************************************************/
 
 
 function fn_avatax_tax_calculation_get_user_info_before($condition, $user_id, $user_fields)
@@ -3040,52 +2857,40 @@ function fn_avatax_tax_calculation_get_user_info_before($condition, $user_id, $u
 }
 
 /****************************************************************************
-*                                                                              *
-*   Function Header                                                            *
-*                                                                           *
-*   File Version       :                                                    *
-*   Last Updated On        :    09/07/2015                                           *
-*   Description            :      This function is for Avatax Address Validation                                    *
-**********************************************e*****************************/
+ *                                                                          *
+ *   Function Header                                                        *
+ *                                                                          *
+ *   File Version       :                                                   *
+ *   Last Updated On    :    09/07/2015                                     *
+ *   Description        :    This function is for Avatax Address Validation *
+ ****************************************************************************/
 
 function fn_avatax_tax_calculation_address_validation($flag)
 {
-      
     $address_validation = Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation');
     if ($address_validation && !empty($_REQUEST['userData'])) {
         $user_data = array();
-        $resArr=array();
+        $resArr = array();
         $address_data = array();
         $valid_address_data = array();
         parse_str($_REQUEST['userData'], $userDataarray);
         $user_data = $userDataarray['user_data'];
-       $address_data["service_url"] = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
+        $address_data["service_url"] = Registry::get('addons.avatax_tax_calculation.avatax_service_url');
         $address_data["account"] = Registry::get('addons.avatax_tax_calculation.avatax_account_number');
-        
         $address_data["license"] = Registry::get('addons.avatax_tax_calculation.avatax_license_key');
-            $environment = 'Development';
-   
-
-    $pos = strpos($address_data["service_url"], "development");
-    if ($pos === false) $environment = 'Production';
-    else $environment = 'Development';
-    
-    
-       $address_data["environment"]=$environment;
+        $environment = strpos($address_data["service_url"], "development") === false ? 'Production': 'Development';
+        $address_data["environment"] = $environment;
        
-
-       //$address_data["client"] = CLIENT_NAME;
-        if ($flag==1) {
-        $address_data["line1"] = $user_data["b_address"];
-        $address_data["line2"] = $user_data["b_address_2"];
-        //$address_data["line3"] = "";
-        $address_data["city"] = $user_data["b_city"];
-        $address_data["region"] = $user_data["b_state"];
-        $address_data["postalcode"] = $user_data["b_zipcode"];
-        $address_data["country"] = $user_data["b_country"];
-        }
-         else if ($flag==2)
-        {
+        //$address_data["client"] = CLIENT_NAME;
+        if ($flag == 1) {
+            $address_data["line1"] = $user_data["b_address"];
+            $address_data["line2"] = $user_data["b_address_2"];
+            //$address_data["line3"] = "";
+            $address_data["city"] = $user_data["b_city"];
+            $address_data["region"] = $user_data["b_state"];
+            $address_data["postalcode"] = $user_data["b_zipcode"];
+            $address_data["country"] = $user_data["b_country"];
+        } else if ($flag == 2) {
             $address_data["line1"] = $user_data["s_address"];
             $address_data["line2"] = $user_data["s_address_2"];
             //$address_data["line3"] = "";
@@ -3115,44 +2920,36 @@ function fn_avatax_tax_calculation_address_validation($flag)
             $resArr["msg"]=$valid_address_data;
             $resArr["address"]=$address_data;
         }
-               echo json_encode($resArr);
+        echo json_encode($resArr);
 
         exit;
         
-    }//End of If 
-
-    
+    }
 }     
 
 function fn_avatax_tax_calculation_update_cart_by_data_post($cart, $new_cart_data, $auth)
 {  
-       $order_id=$cart['order_id'];
-   $order_info = fn_get_order_info($order_id);
-    $cart['stored_taxes']='Y';
- $cart['tax_subtotal']=$GetTaxReturnValue['GetTaxTotalTax'];
+    $order_id = $cart['order_id'];
+    $order_info = fn_get_order_info($order_id);
+    $cart['stored_taxes'] = 'Y';
+    $cart['tax_subtotal'] = $GetTaxReturnValue['GetTaxTotalTax'];
 
-   $GetTaxReturnValue = fn_avatax_tax_calculation_avatax_gettax($order_info, $auth);
-   $rate_value=$GetTaxReturnValue['GetTaxTotalTax'];
-        $avatax_tax_id=1;    
-       return $cart["stored_taxes_data"] = array($avatax_tax_id => array(
-            'rate_type' => 'P',
-            'rate_value' => $rate_value,
-            'price_includes_tax' => 'N',
-            'priority' => 0,
-            'tax_subtotal' => $tax_result,
-            'description' => 'Total Tax',
-            'applies' => Array
-            (
-                'P' => $p_rate,
-                'S' => $s_rate
-            )
+    $GetTaxReturnValue = fn_avatax_tax_calculation_avatax_gettax($order_info, $auth);
+    $rate_value = $GetTaxReturnValue['GetTaxTotalTax'];
+    $avatax_tax_id = 1;    
+    return $cart["stored_taxes_data"] = array($avatax_tax_id => array(
+        'rate_type' => 'P',
+        'rate_value' => $rate_value,
+        'price_includes_tax' => 'N',
+        'priority' => 0,
+        'tax_subtotal' => $tax_result,
+        'description' => 'Total Tax',
+        'applies' => array (
+            'P' => $p_rate,
+            'S' => $s_rate
         )
-        );
-       
-    
+    ));
 }
-
-
 
 #}
 //$content .= "Product Original Price *** ".print_r($product_original_price,true)."\n";
