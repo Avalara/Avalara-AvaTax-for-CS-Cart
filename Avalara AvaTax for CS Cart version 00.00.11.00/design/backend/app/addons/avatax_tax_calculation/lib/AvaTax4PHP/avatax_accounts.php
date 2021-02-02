@@ -12,7 +12,7 @@ function AccountValidation()
 	$license = $_REQUEST["license"];
 	$environment = $_REQUEST["environment"];
 	$client = $_REQUEST["client"];
-	$log = $_REQUEST["log"];
+	$log = array_key_exists("log", $_REQUEST) ? $_REQUEST["log"] : 0;
 
 	new ATConfig($environment, array('url'=>$development_url, 'account'=>$account,'license'=>$license,'client'=>$client, 'trace'=> TRUE));
 
