@@ -1,7 +1,6 @@
 <?php
 
 	include_once($lib_path."AvaTax4PHP/AvaTax.php");
-	spl_autoload_register('__autoload');
 	
 	$successMsg = "";
 	$development_url = $_REQUEST["serviceurl"];

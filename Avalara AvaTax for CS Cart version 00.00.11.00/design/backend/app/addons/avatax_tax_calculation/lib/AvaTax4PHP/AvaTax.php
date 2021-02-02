@@ -9,9 +9,8 @@
  * Defines class loading search path.
  */
  
-function __autoload($class_name) 
+spl_autoload_register(function ($class_name)
 { 	
-	
 	$path=dirname(__FILE__).'/classes/'.$class_name . '.class.php';
 	
 	if(!file_exists($path))
@@ -21,16 +20,14 @@ function __autoload($class_name)
 	
 	if(!file_exists($path))
 	{
-                
 		$path=dirname(__FILE__).'/classes/AvaCert2Svc/'.$class_name . '.class.php';		
 	}
-              
-        if(file_exists($path))
-        {      
-            require_once $path;
-        }
-     
-}
+	
+	if(file_exists($path))
+	{
+		require_once $path;
+	}
+});
 
 function EnsureIsArray( $obj ) 
 {

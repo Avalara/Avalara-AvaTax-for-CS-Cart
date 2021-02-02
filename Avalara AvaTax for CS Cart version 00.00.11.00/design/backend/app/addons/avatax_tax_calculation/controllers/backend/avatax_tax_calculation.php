@@ -19,27 +19,27 @@ if (!defined('BOOTSTRAP')) { die('Access denied'); }
 if ($_SERVER['REQUEST_METHOD']	== 'POST') {
 
     if ($mode == 'connection_test') {
-    
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
         $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
         require_once($lib_path."AvaTax4PHP/avatax_test_connection.php");	
         exit;
     }
-    else if ($mode == 'setup_assistant') {
     
+    if ($mode == 'setup_assistant') {
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
         $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
         
         require_once($lib_path."AvaTax4PHP/avatax_accounts.php");
             
-        if(isset($_REQUEST["from"]) && $_REQUEST["from"]=="AvaTaxFetchCompanies"){
+        if (isset($_REQUEST["from"]) && $_REQUEST["from"] == "AvaTaxFetchCompanies"){
             AccountValidation(); 
         }
         exit;
     }
-    else if ($mode == 'config_log') {
+    
+    if ($mode == 'config_log') {
         $account=$_REQUEST["acc"];
         $license=$_REQUEST["license"]; 
         $serviceurl=$_REQUEST["serviceurl"];
@@ -68,10 +68,10 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
         //Call serviceLog function
         $returnServiceLog = $config_log->serviceLog($performance_metrics);
         //$config_log->writeConfigLog($account,$license,$serviceurl,$companyCode,$environment,$client,$isAvataxEnabled,$isUPCOption,$isSaveTransaction,$isLogEnabled,$isAddressValidation);
-        exit;
-        
+        exit;   
     }
-    else if ($mode == 'create_account') {
+     
+    if ($mode == 'create_account') {
     
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
@@ -79,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
         include_once($lib_path."AvaTax4PHP/avatax_create_account.php");
         exit;
     }
-    else if ($mode == 'tpa') {
+    
+    if ($mode == 'tpa') {
     
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
@@ -87,7 +88,8 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
         include_once($lib_path."AvaTax4PHP/tpa.php");
         exit;
     }
-    else if ($mode == 'validate_account') {
+    
+    if ($mode == 'validate_account') {
     
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';

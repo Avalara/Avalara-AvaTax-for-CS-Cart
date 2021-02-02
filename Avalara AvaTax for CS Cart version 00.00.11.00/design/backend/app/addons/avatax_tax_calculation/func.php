@@ -922,8 +922,6 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
-      spl_autoload_register('__autoload');
-
 
     $environment = 'Development';
    
@@ -1286,7 +1284,6 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
-    spl_autoload_register('__autoload');
 
     $environment = 'Development';
     $company_details = fn_get_company_placement_info($order_info['company_id']);
@@ -1619,7 +1616,6 @@ function fn_avatax_tax_calculation_avatax_gettax_commit($order_info, $commit_sta
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
-    spl_autoload_register('__autoload');
 
     $environment = 'Development';
     $company_details = fn_get_company_placement_info($order_info['company_id']);
@@ -2116,7 +2112,6 @@ function fn_avatax_tax_calculation_avatax_return_invoice($return_info, $order_in
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
-    spl_autoload_register('__autoload');
 
     $environment = 'Development';
     $company_details = fn_get_company_placement_info($order_info['company_id']);
