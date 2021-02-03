@@ -191,6 +191,24 @@
         <item for="install">ALTER TABLE ?:users ADD `tax_exempt_number` VARCHAR( 25 ) NOT NULL DEFAULT 'Tax Exempt';</item>
         <item for="install">UPDATE ?:users SET `tax_exempt_number`= 'none' WHERE `tax_exempt_number` = 'Tax Exempt';</item>
 		<!-- ALTER TABLE ?:shippings DROP `tax_code`; -->
+        
+		<item for="uninstall">ALTER TABLE `?:status_descriptions` DROP COLUMN status;</item>
+		<item for="uninstall">ALTER TABLE `?:status_descriptions` DROP COLUMN type;</item>
+
+        <item for="uninstall">ALTER TABLE `?:orders` DROP COLUMN `avatax_paytax_document_id`, `avatax_paytax_transaction_id`, `avatax_paytax_document_code`, `avatax_paytax_error_message`;</item>
+		<item for="uninstall">ALTER TABLE `?:status_descriptions` DROP COLUMN `avatax_document_status`;</item>
+
+        <item for="uninstall">ALTER TABLE ?:rma_returns DROP COLUMN `avatax_return_document_code`;</item>
+		<item for="uninstall">ALTER TABLE ?:users DROP COLUMN `tax_exempt_number`;</item>		
+		<item for="uninstall">ALTER TABLE ?:users DROP COLUMN `tax_entity_usecode`;</item>	
+
+        <item for="uninstall">DROP TABLE IF EXISTS ?:avatax_entity_usecode;</item>
+
+        <item for="uninstall">ALTER TABLE ?:products DROP COLUMN `tax_code`;</item>
+        <item for="uninstall">ALTER TABLE ?:products DROP COLUMN `upc_code`;</item>
+        <item for="uninstall">ALTER TABLE ?:shippings DROP COLUMN `tax_code`;</item>
+        <item for="uninstall">ALTER TABLE ?:users DROP COLUMN `tax_exempt_number`;</item>
+
 		<item for="uninstall">DROP TABLE IF EXISTS ?:avatax_entity_usecode;</item>
 	</queries>
 </addon>
