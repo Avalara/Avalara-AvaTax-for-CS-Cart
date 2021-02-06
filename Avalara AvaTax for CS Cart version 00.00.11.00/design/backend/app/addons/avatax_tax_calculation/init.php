@@ -18,7 +18,7 @@ fn_register_hooks(
     'calculate_taxes_post',
     'place_order',
     'update_order',
-    //'is_user_exists_post',
+    'is_user_exists_post',
     'change_order_status',
     'send_return_mail_pre',
     'change_return_status',

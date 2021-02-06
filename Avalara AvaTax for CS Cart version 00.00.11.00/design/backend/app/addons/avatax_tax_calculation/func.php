@@ -2592,23 +2592,23 @@ function fn_avatax_tax_calculation_is_user_exists_post($user_id, $user_data, $is
 {
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation') == 1) {
         //AvaTax - Address Validation - Check
-        $avatax_tax_country = "";
-        if (trim(Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation_place')) == "both") {
-            $avatax_tax_country = "|US|CA|";
-        } else {
-            $avatax_tax_country = "|" . Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation_place') . "|";
-        }
-        $avatax_tax_country_pos = strpos($avatax_tax_country, "|" . $user_data["s_country"] . "|");
+        //$avatax_tax_country = "";
+        //if (trim(Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation_place')) == "both") {
+        //    $avatax_tax_country = "|US|CA|";
+        //} else {
+        //    $avatax_tax_country = "|" . Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation_place') . "|";
+        //}
+        //$avatax_tax_country_pos = strpos($avatax_tax_country, "|" . $user_data["s_country"] . "|");
 
-        if ($avatax_tax_country_pos !== false) {
-            $return_message = fn_avatax_tax_calculation_avatax_address_validation($user_data);
+        //if ($avatax_tax_country_pos !== false) {
+        //    $return_message = fn_avatax_tax_calculation_avatax_address_validation($user_data);
             //Registry::set('addons.avatax_tax_calculation.avatax_tax_flag','1');
-            if (trim($return_message) != "") {
-                fn_set_notification('E', __('error'), $return_message);
-                $errors = true;
+        //    if (trim($return_message) != "") {
+        //        fn_set_notification('E', __('error'), $return_message);
+        //        $errors = true;
                 //$_REQUEST['next_step'] = $_REQUEST['update_step'];
-            }
-        }
+        //    }
+        //}
     }
 }
 
@@ -2846,10 +2846,10 @@ function fn_avatax_tax_calculation_change_return_status($return_info, $order_inf
  *                                                                          *
  ****************************************************************************/
 
-
-function fn_avatax_tax_calculation_get_user_info_before($condition, $user_id, $user_fields)
+function fn_avatax_tax_calculation_get_user_info_before(&$condition, &$user_id, &$user_fields, &$join)
 {
-    $user_fields = implode(",",$user_fields) . ", tax_exempt_number, tax_entity_usecode ";
+    array_push($user_fields, "tax_exempt_number");
+    array_push($user_fields, "tax_entity_usecode");
 
     $tax_entity_usecode_data = db_get_array("SELECT * FROM ?:avatax_entity_usecode WHERE 1");
 

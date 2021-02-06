@@ -18,9 +18,6 @@ use Tygh\Navigation\LastView;
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
 
 if ($mode == 'update') {
-
 	$content .= "Product Original Price *** \n";
-	file_put_contents("usage_log.txt", $content, FILE_APPEND | LOCK_EX);	
-
-
+	file_put_contents("usage_log.txt", $content, FILE_APPEND | LOCK_EX);
 }
