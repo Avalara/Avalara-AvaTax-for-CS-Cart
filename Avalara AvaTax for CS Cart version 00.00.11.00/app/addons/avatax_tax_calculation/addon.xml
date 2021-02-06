@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <addon scheme="2.0" edition_type="ROOT,ULT:VENDOR">
 	<id>avatax_tax_calculation</id>
-	<version>1.0</version>
+	<version>1.1</version>
     <default_language>en</default_language>
 	<name>Avalara AvaTax</name>
 	<description>Avalara AvaTax</description>
