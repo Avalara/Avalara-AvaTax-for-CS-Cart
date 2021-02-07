@@ -136,7 +136,11 @@
             </section>
         </sections>
     </settings>
-	<queries>		
+
+	<queries>
+
+        <!-- Install-->
+
 		<item for="install">ALTER TABLE `?:status_descriptions` ADD status VARCHAR(1) NOT NULL;</item>
 		<item for="install">ALTER TABLE `?:status_descriptions` ADD type VARCHAR(1) NOT NULL;</item>
 		<item for="install">UPDATE `?:status_descriptions` SET status = 'A' , type = 'G' where description ='Active';</item>
@@ -181,7 +185,7 @@
 		</item>
 		<item for="install">ALTER TABLE ?:products ADD `tax_code` VARCHAR( 11 ) DEFAULT 'none';</item>
 		<item for="install">UPDATE ?:products SET `tax_code`= 'none' WHERE `tax_code` = 'none';</item>
-        <!-- Added on Jan 13 - UPC Code Implementation) -->
+
         <item for="install">ALTER TABLE ?:products ADD `upc_code` VARCHAR( 20 ) DEFAULT 'none';</item>
         <item for="install">UPDATE ?:products SET `upc_code`= 'none' WHERE `upc_code` = 'none';</item>
 
@@ -190,12 +194,17 @@
 
         <item for="install">ALTER TABLE ?:users ADD `tax_exempt_number` VARCHAR( 25 ) NOT NULL DEFAULT 'Tax Exempt';</item>
         <item for="install">UPDATE ?:users SET `tax_exempt_number`= 'none' WHERE `tax_exempt_number` = 'Tax Exempt';</item>
-		<!-- ALTER TABLE ?:shippings DROP `tax_code`; -->
+
+        <!-- Uninstall -->
         
 		<item for="uninstall">ALTER TABLE `?:status_descriptions` DROP COLUMN status;</item>
 		<item for="uninstall">ALTER TABLE `?:status_descriptions` DROP COLUMN type;</item>
 
-        <item for="uninstall">ALTER TABLE `?:orders` DROP COLUMN `avatax_paytax_document_id`, `avatax_paytax_transaction_id`, `avatax_paytax_document_code`, `avatax_paytax_error_message`;</item>
+        <item for="uninstall">ALTER TABLE `?:orders` DROP COLUMN `avatax_paytax_document_id`;</item>
+        <item for="uninstall">ALTER TABLE `?:orders` DROP COLUMN `avatax_paytax_transaction_id`;</item>
+        <item for="uninstall">ALTER TABLE `?:orders` DROP COLUMN `avatax_paytax_document_code`;</item>
+        <item for="uninstall">ALTER TABLE `?:orders` DROP COLUMN `avatax_paytax_error_message`;</item>
+
 		<item for="uninstall">ALTER TABLE `?:status_descriptions` DROP COLUMN `avatax_document_status`;</item>
 
         <item for="uninstall">ALTER TABLE ?:rma_returns DROP COLUMN `avatax_return_document_code`;</item>
@@ -207,8 +216,5 @@
         <item for="uninstall">ALTER TABLE ?:products DROP COLUMN `tax_code`;</item>
         <item for="uninstall">ALTER TABLE ?:products DROP COLUMN `upc_code`;</item>
         <item for="uninstall">ALTER TABLE ?:shippings DROP COLUMN `tax_code`;</item>
-        <item for="uninstall">ALTER TABLE ?:users DROP COLUMN `tax_exempt_number`;</item>
-
-		<item for="uninstall">DROP TABLE IF EXISTS ?:avatax_entity_usecode;</item>
 	</queries>
 </addon>
