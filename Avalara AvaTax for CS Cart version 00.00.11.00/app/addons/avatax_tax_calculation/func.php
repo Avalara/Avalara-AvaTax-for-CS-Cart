@@ -87,7 +87,7 @@ function fn_avatax_tax_calculation_testconnection()
                     var client = "'.CLIENT_NAME.'";
                             
                     $.ajax({
-                        url:"'.$curPageURL[0].'?dispatch=avatax_tax_calculation.config_log&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&environment="+environment+"&client="+ client+"&isAvataxEnabled="+isAvataxEnabled+"&isUPCOption="+isUPCOption+"&isSaveTransaction="+isSaveTransaction+"&isLogEnabled="+isLogEnabled+"&companyCode="+companyCode+"&isAddressValidation="+isAddressValidation,
+                        url:"'.$curPageURL[0].'?dispatch=avatax_tax_calculation.config_log&security_hash="+Tygh.security_hash+"&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&environment="+environment+"&client="+ client+"&isAvataxEnabled="+isAvataxEnabled+"&isUPCOption="+isUPCOption+"&isSaveTransaction="+isSaveTransaction+"&isLogEnabled="+isLogEnabled+"&companyCode="+companyCode+"&isAddressValidation="+isAddressValidation,
                         success: function(result) {
                             //alert(result);
                         },
@@ -222,7 +222,7 @@ function fn_avatax_tax_calculation_testconnection()
                 var environment = serviceURLVal.indexOf("development") > 0 ? "Development" : "Production";
                 var client = "'.CLIENT_NAME.'";
                 
-                $.post("' . $curPageURL[0] . '?dispatch=avatax_tax_calculation.connection_test&from=AvaTaxConnectionTest&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&environment="+environment+"&client="+ client, {q: ""}, function(data) {
+                $.post("' . $curPageURL[0] . '?dispatch=avatax_tax_calculation.connection_test&security_hash="+Tygh.security_hash+"&from=AvaTaxConnectionTest&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&environment="+environment+"&client="+ client, {q: ""}, function(data) {
                     if (data.length > 0) {
                         $("#AvaTaxTestConnectionDialog").html(data);
                         if (!data.match(/Failed/gi)) {
@@ -278,7 +278,7 @@ function fn_avatax_tax_calculation_testconnection()
             var environment = serviceURLVal.indexOf("development") ? "Development" : "Production";
             var client = "'.CLIENT_NAME.'";
 
-            $.post("' . $curPageURL[0] . '?dispatch=avatax_tax_calculation.setup_assistant&from=AvaTaxFetchCompanies&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&environment="+environment+"&client="+ client, {q: ""}, function(data) {
+            $.post("' . $curPageURL[0] . '?dispatch=avatax_tax_calculation.setup_assistant&security_hash="+Tygh.security_hash+"&from=AvaTaxFetchCompanies&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&environment="+environment+"&client="+ client, {q: ""}, function(data) {
                 if (data.length > 0) {
                     var accountsData = JSON.parse(data);
                     $("[id^=\'addon_option_avatax_tax_calculation_select_codes\']").find("option").remove();
@@ -378,12 +378,12 @@ function fn_avatax_tax_calculation_TPA_link()
                     $("#AvaTaxTpaDialog").html(\'<div style="text-align:center;padding-top:10px;"><img src="design/backend/media/images/loading2.gif" border="0" alt="Work In Progress..." ><br/>Work In Progress...</div>\');
 
                         $.ajax({
-                            url:"'.$curPageURL[0].'?dispatch=avatax_tax_calculation.validate_account&acc="+accountVal+"&username="+consoleUserName+"&password="+consolePassword,
+                            url:"'.$curPageURL[0].'?dispatch=avatax_tax_calculation.validate_account&security_hash="+Tygh.security_hash+"&acc="+accountVal+"&username="+consoleUserName+"&password="+consolePassword,
                             success: function(result1) {
                                 var jsonValacc=JSON.parse(result1);
                                 if (jsonValacc.Status=="Success") {
                                     $.ajax({
-                                        url:"'.$curPageURL[0].'?dispatch=avatax_tax_calculation.tpa&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&companyCode="+companyCode+"&username="+consoleUserName+"&password="+consolePassword+"&erp=cscart&environment="+environment,
+                                        url:"'.$curPageURL[0].'?dispatch=avatax_tax_calculation.tpa&security_hash="+Tygh.security_hash+"&acc="+accountVal+"&license="+licenseVal+"&serviceurl="+serviceURLVal+"&companyCode="+companyCode+"&username="+consoleUserName+"&password="+consolePassword+"&erp=cscart&environment="+environment,
                                         success: function(result) {
                                             var json=JSON.parse(result);
                                             var msg="";
@@ -2850,7 +2850,7 @@ function fn_avatax_tax_calculation_get_user_info_before(&$condition, &$user_id, 
 {
     array_push($user_fields, "tax_exempt_number");
     array_push($user_fields, "tax_entity_usecode");
-
+    
     $tax_entity_usecode_data = db_get_array("SELECT * FROM ?:avatax_entity_usecode WHERE 1");
 
     Registry::get('view')->assign('tax_entity_usecode_data', $tax_entity_usecode_data);
