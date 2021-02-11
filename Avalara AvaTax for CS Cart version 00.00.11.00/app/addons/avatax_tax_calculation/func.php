@@ -514,7 +514,7 @@ function fn_avatax_tax_calculation_admin_nexus_link()
 function curPageURL()
 {
     $pageURL = 'http';
-    if (isset($_SERVER["HTTPS"])&& $_SERVER["HTTPS"] == "on") {
+    if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
         $pageURL .= "s";
     }
     $pageURL .= "://";
@@ -677,7 +677,7 @@ function fn_avatax_tax_calculation_get_order_timestamp($order_id)
  ****************************************************************************/
 function fn_get_avatax_document_status()
 {
-    $order_statuses = fn_get_statuses(STATUSES_ORDER, array(), true);
+    $order_statuses = fn_get_statuses();
 
     $avatax_document_status = array();
     foreach ($order_statuses as $key => $value) {
@@ -827,7 +827,7 @@ function fn_document_state_committed($order_info, $status_from)
 *                           passed second parameter                         *
 ****************************************************************************/
 
-function fn_avatax_change_document_status($order_info,$status_to, $status_from, $order_id = 0)
+function fn_avatax_change_document_status($order_info, $status_to, $status_from, $order_id = 0)
 {
     Switch ($status_to) {
         case 'P': //Processed
@@ -1225,8 +1225,8 @@ function fn_avatax_tax_calculation_avatax_address_validation($user_data)
 
 function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
 {
-    $timeStamp = new DateTime();                        // Create Time Stamp
-    $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+    $timeStamp = new DateTime(); // Create Time Stamp
+    $connectorstart = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
@@ -1354,26 +1354,15 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
         $UpcCode = $product_data['upc_code'];
         if (Registry::get('addons.avatax_tax_calculation.avatax_tax_upc') == 1)
         {
-            if  ( ($UpcCode == "") || ($UpcCode == "none") ) {
-                if ($v["product_code"] == "") {
-                    $itemCode = substr($v["product"], 0, 50);
-
-                }
-                else{
-                    $itemCode  = $v["product_code"];
-                }
-            }
-            else
-            {
+            if ( ($UpcCode == "") || ($UpcCode == "none") ) {
+                $itemCode = $v["product_code"] == "" ? substr($v["product"], 0, 50) : $v["product_code"];
+            } else {
                 // UPC Code validation logic will come here : Future
                 $itemCode = 'UPC:' . $UpcCode;
             }
-        }
-        else if ($v["product_code"] == "")
-        {
+        } else if ($v["product_code"] == "") {
             $itemCode  = substr($v["product"], 0, 50);
-        }
-        else{
+        } else {
             $itemCode  = $v["product_code"];
         }
 
@@ -1409,7 +1398,7 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
         $product_total += $v['amount'];
     }
 
-    //Shipping Line Item
+    // Shipping Line Item
     // Order Totals
 
     $shipping_count = 0;
@@ -1473,8 +1462,8 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
 
             require_once "SystemLogger.php";
             // Creating the System Logger Object
-            $application_log     =     new SystemLogger;
-            $connectorend=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+            $application_log = new SystemLogger;
+            $connectorend = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
             $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
             $performance_metrics[] = array($connectorstart,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax Start Time-\"".$connectorstart,$account,$getTaxResult->getDocCode(),"GetTax",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
             $performance_metrics[] = array($connectorcalling,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax End Time-\"".$connectorcalling,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
@@ -1486,10 +1475,10 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
             // System Logger starts here:
             $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
                 
-            if ($log_mode==1) {
+            if ($log_mode == 1) {
 
-                $params                =   '[Input: ' . ']';        // Create Param List
-                $u_name                =    '';                            // Eventually will come from $_SESSION[] object
+                $params = '[Input: ' . ']';        // Create Param List
+                $u_name = '';                      // Eventually will come from $_SESSION[] object
                 $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastRequest());        // Create System Log
                 $application_log->WriteSystemLogToFile();            // Log info goes to log file
                 
@@ -1502,12 +1491,10 @@ function fn_avatax_tax_calculation_avatax_gettax($order_info, $auth)
                 //     System Logger ends here
                 //    Logging code snippet (optional) ends here
             }
-            else{}
         
             return $GetTaxData;
 
         } else {
-
             foreach ($getTaxResult->getMessages() as $msg) {
                
                 $returnMessage .= $msg->getName() . ": " . $msg->getSummary() . "\n";
@@ -2503,7 +2490,7 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
  ****************************************************************************/
 
 
-function fn_avatax_tax_calculation_update_order($order,$order_id) {
+function fn_avatax_tax_calculation_update_order($order, $order_id) {
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_calculation') == 1) {
         if (Registry::get('addons.avatax_tax_calculation.avatax_tax_savedoc') == 1) {
             $order_info = fn_get_order_info($order_id);
@@ -2624,7 +2611,6 @@ function fn_avatax_tax_calculation_is_user_exists_post($user_id, $user_data, $is
 
 function fn_avatax_tax_calculation_change_order_status($status_to, $status_from, $order_info, $force_notification, $order_statuses, $place_order)
 {
-
     //Code added for address validation
     /***
     if (Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation') == 1) {

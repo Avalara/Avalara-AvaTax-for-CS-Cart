@@ -7,6 +7,9 @@
 	<description>Avalara AvaTax</description>
 	<priority>100502</priority>
 	<status>active</status>
+    <supplier>Avalara</supplier>
+    <supplier_link>https://www.avalara.com</supplier_link>
+
     <settings edition_type="ROOT,ULT:VENDOR">
         <sections>
             <section id="section1">

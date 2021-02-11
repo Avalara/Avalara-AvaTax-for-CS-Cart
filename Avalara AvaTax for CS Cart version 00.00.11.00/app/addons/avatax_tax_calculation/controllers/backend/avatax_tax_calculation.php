@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
         
         require_once($lib_path."AvaTax4PHP/avatax_accounts.php");
             
-        if (isset($_REQUEST["from"]) && $_REQUEST["from"] == "AvaTaxFetchCompanies"){
+        if (isset($_REQUEST["from"]) && $_REQUEST["from"] == "AvaTaxFetchCompanies") {
             AccountValidation(); 
         }
         exit;
@@ -52,14 +52,13 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
         $isLogEnabled=$_REQUEST["isLogEnabled"];
         $isAddressValidation=$_REQUEST["isAddressValidation"];
         
-        
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
         require_once($addon_path."/SystemLogger.php");
         // Creating the System Logger Object
         $config_log 	= 	new SystemLogger;
         $msgString='Connector Configuration -Account ID : '.$account.' License Key : '.$license.' ServiceURL : '.$serviceurl.' CompanyCode :'.$companyCode.' Environment : '.$environment.' Client : '.$client.' Is Avatax Enabled : '.$isAvataxEnabled;
         $msgString .=' Is UPC Option Enabled: '.$isUPCOption.' Is Save Transaction Enabled: '.$isSaveTransaction.' Is Log Enabled: '.$isLogEnabled.' Is Address Validation Enabled: '.$isAddressValidation;
-        $timeStamp 			= 	new DateTime();						// Create Time Stamp
+        $timeStamp = new DateTime(); // Create Time Stamp
         
         $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
         $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
@@ -72,7 +71,6 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
     }
      
     if ($mode == 'create_account') {
-    
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
         $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
@@ -81,7 +79,6 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
     }
     
     if ($mode == 'tpa') {
-    
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
         $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
@@ -90,7 +87,6 @@ if ($_SERVER['REQUEST_METHOD']	== 'POST') {
     }
     
     if ($mode == 'validate_account') {
-    
         $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
         $addon_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation';
         $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');

@@ -35,7 +35,7 @@
 		var $passed_param;
 		var $result_string;
 				
-		function SystemLogger()
+		function __construct()
 		{
 			// constructor definition
 			$this->when = '';
