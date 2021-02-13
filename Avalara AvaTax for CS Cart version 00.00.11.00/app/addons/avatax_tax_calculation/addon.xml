@@ -174,7 +174,6 @@
         <item for="install">UPDATE `?:status_descriptions` SET avatax_document_status = 'Voided' where status ='D' and type = 'R';</item>
         <item for="install">UPDATE `?:status_descriptions` SET avatax_document_status = 'Committed' where status ='C' and type = 'R';</item>
 		<item for="install">ALTER TABLE ?:rma_returns ADD `avatax_return_document_code` VARCHAR( 10 ) NOT NULL;</item>
-		<item for="install">ALTER TABLE ?:users ADD `tax_exempt_number` VARCHAR( 30 ) NOT NULL;</item>		
 		<item for="install">ALTER TABLE ?:users ADD `tax_entity_usecode` CHAR( 1 ) NOT NULL;</item>		
 		<item for="install">DROP TABLE IF EXISTS ?:avatax_entity_usecode;</item>
 		<item for="install">
