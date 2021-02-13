@@ -7,18 +7,18 @@
  * Defines class loading search path.
  * 
  * @author    Avalara
- * @copyright © 2004 - 2011 Avalara, Inc.  All rights reserved.
+ * @copyright ï¿½ 2004 - 2011 Avalara, Inc.  All rights reserved.
  * @package   Base 
  */
  
-function __autoload($class_name) 
+spl_autoload_register(function ($class_name) 
 {    
     require_once $class_name . '.class.php';
-}
+});
 
 function EnsureIsArray( $obj ) 
 {
-    if( is_object($obj)) 
+    if(is_object($obj)) 
 	{
         $item[0] = $obj;
     } 
@@ -28,8 +28,6 @@ function EnsureIsArray( $obj )
     }
     return $item;
 }
-
-
 
 /**
 * Takes xml as a string and returns it nicely indented

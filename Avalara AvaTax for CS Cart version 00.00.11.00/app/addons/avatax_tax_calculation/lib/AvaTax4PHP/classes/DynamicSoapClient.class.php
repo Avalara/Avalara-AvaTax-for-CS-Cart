@@ -14,7 +14,7 @@
  * @see TaxServiceSoap
  *  
  * @author    Avalara
- * @copyright © 2004 - 2011 Avalara, Inc.  All rights reserved.
+ * @copyright ï¿½ 2004 - 2011 Avalara, Inc.  All rights reserved.
  * @package   Base
  */
  
@@ -23,17 +23,17 @@ class DynamicSoapClient extends SoapClient
     private $config;
     public function __construct($wsdl,$options,&$config)
     {
-		 parent::__construct($wsdl,$options);
+        parent::__construct($wsdl,$options);
         $this->config = $config; 
     }
 
-	public function __call($n,$args)
-	{
+    public function __call($n,$args)
+    {
         $profileHeader = new SoapHeader('http://avatax.avalara.com/services','Profile',new SoapVar($this->profileXML(),XSD_ANYXML));
         $securityHeader = new SoapHeader('http://avatax.avalara.com/services','Security',new SoapVar($this->securityXML(),XSD_ANYXML));
-        	$result = $this->__soapCall($n,$args,NULL,array($securityHeader,$profileHeader));
+        $result = $this->__soapCall($n, $args, NULL, array($securityHeader, $profileHeader));
         return $result;
-	}
+    }
     
     private function securityXML()
     {
@@ -52,8 +52,8 @@ class DynamicSoapClient extends SoapClient
         return 
             '<Profile xmlns="http://avatax.avalara.com/services" SOAP-ENV:actor="http://schemas.xmlsoap.org/soap/actor/next" SOAP-ENV:mustUnderstand="0">'.
                 '<Name>'.$this->config->name.'</Name>'.
-            	'<Client>'.$this->config->client.'</Client>'.
-                '<Adapter>'.$this->config->adapter.'</Adapter>'.        		
+                '<Client>'.$this->config->client.'</Client>'.
+                '<Adapter>'.$this->config->adapter.'</Adapter>'.                
             '</Profile>';
     }
     

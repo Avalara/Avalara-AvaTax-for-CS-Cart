@@ -18,7 +18,7 @@
  * </pre>
  *
  * @author    Avalara
- * @copyright © 2004 - 2011 Avalara, Inc.  All rights reserved.
+ * @copyright ï¿½ 2004 - 2011 Avalara, Inc.  All rights reserved.
  * @package   Tax
  */
 
@@ -34,42 +34,42 @@ class TaxServiceSoap extends AvalaraSoapClient
         'IsAuthorizedResult' => 'IsAuthorizedResult',
         'PingResult' => 'PingResult',
         'ValidateResult' => 'ValidateResult',
-		'Line'=>'Line',
-		'AdjustTaxRequest'=>'AdjustTaxRequest',
-		'AdjustTaxResult'=>'AdjustTaxResult',
-		'CancelTaxRequest'=>'CancelTaxRequest',
-		'CancelTaxResult'=>'CancelTaxResult',
-		'CommitTaxRequest'=>'CommitTaxRequest',
-		'CommitTaxResult'=>'CommitTaxResult',
-		'GetTaxRequest'=>'GetTaxRequest',
-		'GetTaxResult'=>'GetTaxResult',
-		'GetTaxHistoryRequest'=>'GetTaxHistoryRequest',
-		'GetTaxHistoryResult'=>'GetTaxHistoryResult',
-		'PostTaxRequest'=>'PostTaxRequest',
-		'PostTaxResult'=>'PostTaxResult',
-		'ReconcileTaxHistoryRequest'=>'ReconcileTaxHistoryRequest',
-		'ReconcileTaxHistoryResult'=>'ReconcileTaxHistoryResult',
-		'TaxLine'=>'TaxLine',
+        'Line'=>'Line',
+        'AdjustTaxRequest'=>'AdjustTaxRequest',
+        'AdjustTaxResult'=>'AdjustTaxResult',
+        'CancelTaxRequest'=>'CancelTaxRequest',
+        'CancelTaxResult'=>'CancelTaxResult',
+        'CommitTaxRequest'=>'CommitTaxRequest',
+        'CommitTaxResult'=>'CommitTaxResult',
+        'GetTaxRequest'=>'GetTaxRequest',
+        'GetTaxResult'=>'GetTaxResult',
+        'GetTaxHistoryRequest'=>'GetTaxHistoryRequest',
+        'GetTaxHistoryResult'=>'GetTaxHistoryResult',
+        'PostTaxRequest'=>'PostTaxRequest',
+        'PostTaxResult'=>'PostTaxResult',
+        'ReconcileTaxHistoryRequest'=>'ReconcileTaxHistoryRequest',
+        'ReconcileTaxHistoryResult'=>'ReconcileTaxHistoryResult',
+        'TaxLine'=>'TaxLine',
         'TaxDetail' => 'TaxDetail',
-		'ApplyPaymentRequest'=>'ApplyPaymentRequest',
-		'ApplyPaymentResult'=>'ApplyPaymentResult',
-		'GetParameterBagItemsRequest'=>'GetParameterBagItemsRequest',		//Changed for 15.6.0.0
-		'GetParameterBagItemsResult'=>'GetParameterBagItemsResult',		//Changed for 15.6.0.0
-		'BaseResult'=>'BaseResult',
-		'TaxOverride'=>'TaxOverride'			
-		);
+        'ApplyPaymentRequest'=>'ApplyPaymentRequest',
+        'ApplyPaymentResult'=>'ApplyPaymentResult',
+        'GetParameterBagItemsRequest'=>'GetParameterBagItemsRequest',        //Changed for 15.6.0.0
+        'GetParameterBagItemsResult'=>'GetParameterBagItemsResult',        //Changed for 15.6.0.0
+        'BaseResult'=>'BaseResult',
+        'TaxOverride'=>'TaxOverride'            
+    );
         
-	public function __construct($configurationName = 'Default')
+    public function __construct($configurationName = 'Default')
     {
         $config = new ATConfig($configurationName);
-        
+    
         $this->client = new DynamicSoapClient   (
             $config->taxWSDL,
             array
             (
-                'location' => $config->url.$config->taxService, 
-                'trace' => $config->trace,
-                'classmap' => TaxServiceSoap::$classmap
+              'location' => $config->url.$config->taxService, 
+              'trace' => $config->trace,
+              'classmap' => TaxServiceSoap::$classmap
             ), 
             $config
         );
@@ -88,8 +88,8 @@ class TaxServiceSoap extends AvalaraSoapClient
      */
     public function getTax(&$getTaxRequest)
     {
-		$getTaxRequest->prepare();
-		return $this->client->GetTax(array('GetTaxRequest' => $getTaxRequest))->GetTaxResult;
+          $getTaxRequest->prepare();
+          return $this->client->GetTax(array('GetTaxRequest' => $getTaxRequest))->GetTaxResult;
     }
 
     /**
@@ -108,12 +108,12 @@ class TaxServiceSoap extends AvalaraSoapClient
      * @throws SoapFault
      */
     /*public com.avalara.avatax.services.tax.GetTaxHistoryResult getTaxHistory(com.avalara.avatax.services.tax.GetTaxHistoryRequest getTaxHistoryRequest) throws SoapFault;
-	*/
-	public function getTaxHistory(&$getTaxHistoryRequest)
+    */
+    public function getTaxHistory(&$getTaxHistoryRequest)
     {
-		$result = $this->client->GetTaxHistory(array('GetTaxHistoryRequest'=>$getTaxHistoryRequest))->GetTaxHistoryResult;
-		$result->getGetTaxRequest()->postFetch();
-		return $result;
+        $result = $this->client->GetTaxHistory(array('GetTaxHistoryRequest'=>$getTaxHistoryRequest))->GetTaxHistoryResult;
+        $result->getGetTaxRequest()->postFetch();
+        return $result;
     }
 
     /**
@@ -131,12 +131,12 @@ class TaxServiceSoap extends AvalaraSoapClient
      * @return a {@link PostTaxResult} object
      * @throws SoapFault
      */
-	 
+     
     /*public com.avalara.avatax.services.tax.PostTaxResult postTax(com.avalara.avatax.services.tax.PostTaxRequest postTaxRequest) throws SoapFault;
-	*/
+    */
     public function postTax(&$postTaxRequest)
-    {		
-		return $this->client->PostTax(array('PostTaxRequest'=>$postTaxRequest))->PostTaxResult;
+    {        
+        return $this->client->PostTax(array('PostTaxRequest'=>$postTaxRequest))->PostTaxResult;
     }
 
     /**
@@ -155,13 +155,14 @@ class TaxServiceSoap extends AvalaraSoapClient
      * @return a {@link CommitTaxResult} object
      * @throws SoapFault
      */
-	 
+     
     /*public com.avalara.avatax.services.tax.CommitTaxResult commitTax(com.avalara.avatax.services.tax.CommitTaxRequest commitTaxRequest) throws SoapFault;
-	*/
-	public function commitTax(&$commitTaxRequest)
+    */
+    public function commitTax(&$commitTaxRequest)
     {
-		return $this->client->CommitTax(array('CommitTaxRequest'=>$commitTaxRequest))->CommitTaxResult;
+        return $this->client->CommitTax(array('CommitTaxRequest'=>$commitTaxRequest))->CommitTaxResult;
     }
+
     /**
      * Cancels a previously calculated tax;  This is for use as a
      * compensating action when posting on the client fails to complete.
@@ -184,10 +185,10 @@ class TaxServiceSoap extends AvalaraSoapClient
      * @throws SoapFault
      */
      /* public com.avalara.avatax.services.tax.CancelTaxResult cancelTax(com.avalara.avatax.services.tax.CancelTaxRequest cancelTaxRequest) throws SoapFault;
-	 */
-	public function cancelTax(&$cancelTaxRequest)
+     */
+    public function cancelTax(&$cancelTaxRequest)
     {
-		return $this->client->CancelTax(array('CancelTaxRequest'=>$cancelTaxRequest))->CancelTaxResult;
+        return $this->client->CancelTax(array('CancelTaxRequest'=>$cancelTaxRequest))->CancelTaxResult;
     }
 
     /**
@@ -221,9 +222,9 @@ class TaxServiceSoap extends AvalaraSoapClient
      */
     /*public com.avalara.avatax.services.tax.ReconcileTaxHistoryResult reconcileTaxHistory(com.avalara.avatax.services.tax.ReconcileTaxHistoryRequest reconcileTaxHistoryRequest) throws SoapFault;
 */
-	public function reconcileTaxHistory(&$reconcileTaxHistoryRequest)
+    public function reconcileTaxHistory(&$reconcileTaxHistoryRequest)
     {
-		return $this->client->ReconcileTaxHistory(array('ReconcileTaxHistoryRequest'=>$reconcileTaxHistoryRequest))->ReconcileTaxHistoryResult;
+        return $this->client->ReconcileTaxHistory(array('ReconcileTaxHistoryRequest'=>$reconcileTaxHistoryRequest))->ReconcileTaxHistoryResult;
     }
 
 /**
@@ -237,13 +238,13 @@ class TaxServiceSoap extends AvalaraSoapClient
      * @return a {@link AdjustTaxResult} object
      * @throws SoapFault
      */
-	 
+     
     /*public com.avalara.avatax.services.tax.CommitTaxResult commitTax(com.avalara.avatax.services.tax.CommitTaxRequest commitTaxRequest) throws SoapFault;
-	*/
-	public function adjustTax(&$adjustTaxRequest)
+    */
+    public function adjustTax(&$adjustTaxRequest)
     {
-		$adjustTaxRequest->getGetTaxRequest()->prepare();
-		return $this->client->AdjustTax(array('AdjustTaxRequest'=>$adjustTaxRequest))->AdjustTaxResult;
+        $adjustTaxRequest->getGetTaxRequest()->prepare();
+        return $this->client->AdjustTax(array('AdjustTaxRequest'=>$adjustTaxRequest))->AdjustTaxResult;
     }
     /**
      * Checks authentication of and authorization to one or more
@@ -263,7 +264,7 @@ class TaxServiceSoap extends AvalaraSoapClient
      * @return IsAuthorizedResult
      * @throws SoapFault
      */
-	 
+     
 
     public function isAuthorized($operations)
     {
@@ -289,27 +290,27 @@ class TaxServiceSoap extends AvalaraSoapClient
     
     /**
      * This method is used to apply a payment to a document for cash basis accounting. Applies a payment date to an existing invoice 
-	 * It sets the document PaymentDate and changes the reporting date from the DocDate default. It may be called before or after a document is committed. It should not be used for accrual basis accounting       
+     * It sets the document PaymentDate and changes the reporting date from the DocDate default. It may be called before or after a document is committed. It should not be used for accrual basis accounting       
      *
      * @param ApplyPaymentRequest $applyPaymentRequest
      * @return ApplyPaymentResult
      */
     
     public function applyPayment(&$applyPaymentRequest)
-    {		
-		return $this->client->ApplyPayment(array('ApplyPaymentRequest' => $applyPaymentRequest))->ApplyPaymentResult;
+    {        
+        return $this->client->ApplyPayment(array('ApplyPaymentRequest' => $applyPaymentRequest))->ApplyPaymentResult;
     }
 
     //Added for Changed for 15.6.0.0
-	public function getParameterBagItems(&$getParameterBagItemsRequest)
+    public function getParameterBagItems(&$getParameterBagItemsRequest)
     {
-		return $this->client->GetParameterBagItems(array('GetParameterBagItemsRequest' => $getParameterBagItemsRequest))->GetParameterBagItemsResult;
+        return $this->client->GetParameterBagItems(array('GetParameterBagItemsRequest' => $getParameterBagItemsRequest))->GetParameterBagItemsResult;
     }
 
     //Added for Changed for 15.6.0.0
-	public function getAllParameterBagItems()
+    public function getAllParameterBagItems()
     {
-		return $this->client->GetAllParameterBagItems()->GetAllParameterBagItemsResult;
+        return $this->client->GetAllParameterBagItems()->GetAllParameterBagItemsResult;
     }
 }
 ?>

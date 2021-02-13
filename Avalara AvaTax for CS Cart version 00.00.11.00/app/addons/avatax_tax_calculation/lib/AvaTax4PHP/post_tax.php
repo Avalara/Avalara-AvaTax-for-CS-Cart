@@ -3,7 +3,6 @@
 //{
 	//require_once('AvaTax.php');
 	include_once($lib_path."AvaTax4PHP/AvaTax.php");
-	spl_autoload_register(__autoload);
         include_once $addon_path."SystemLogger.php";
         $timeStamp 			= 	new DateTime();						// Create Time Stamp
         $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 

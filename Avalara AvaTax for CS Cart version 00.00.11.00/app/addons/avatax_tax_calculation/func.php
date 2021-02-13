@@ -875,10 +875,10 @@ function fn_avatax_change_document_status($order_info, $status_to, $status_from,
 *                                                                           *
 ****************************************************************************/
 
-function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rates, $company_id, $cart, $auth)
+function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rates, $company_id, $cart, $auth, $order_info)
 { 
     $timeStamp = new DateTime();
-    $connectorstart=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+    $connectorstart = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
     $time_start = round(microtime(true) * 1000);
     $lib_path = Registry::get('config.dir.addons') . 'avatax_tax_calculation/lib/';
     require_once($lib_path . "AvaTax4PHP/AvaTax.php");
@@ -922,11 +922,7 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
     $a = session_id();
     if (empty($a)) session_start();
 
-    $DocCode=$order_info['order_id'];
-    if ($DocCode == "")
-    {
-        $DocCode = session_id();
-    }    
+    $DocCode = array_key_exists('order_id', $order_info) && $order_info['order_id'] != "" ? $order_info['order_id'] : session_id();
     $SalesPersonCode = "";
     $EntityUseCode = "";
     $Discount = $cart['subtotal_discount'];
@@ -1010,24 +1006,14 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
             $UpcCode = $product['product_id'];
             $UpcCode = db_get_field("SELECT `upc_code` FROM ?:products WHERE `product_id` = $UpcCode");
             if  ( ($UpcCode == "") || ($UpcCode == "none") ) {
-                if ($product["product_code"] == "") {
-                    $itemCode = substr($product["product"], 0, 50);
-                }
-                else{
-                    $itemCode  = $product["product_code"];
-                }
-            }
-            else
-            {
+                $itemCode = $product["product_code"] == "" ? substr($product["product"], 0, 50) : $product["product_code"];
+            } else {
                 // UPC Code validation logic will come here : (Future)
                 $itemCode = 'UPC:' . $UpcCode;
             }
-        }
-        else if ($product["product_code"] == "")
-        {
+        } else if ($product["product_code"] == "") {
             $itemCode  = substr($product["product"], 0, 50);
-        }
-        else {
+        } else {
             $itemCode = $product["product_code"];
         }
         /////////////////////// UPC Implementation - End /////////////////////////
@@ -1076,14 +1062,13 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
     $returnMessage = "";
 
     try {
-        
         if (!empty($DestPostalCode)) {
-            $connectortime = round(microtime(true) * 1000)-$time_start;
+            $connectortime = round(microtime(true) * 1000) - $time_start;
             $latency = round(microtime(true) * 1000);
-            $connectorcalling=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+            $connectorcalling = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
             $getTaxResult = $client->getTax($request);
-            $connectorcomplete=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
-            $latency = round(microtime(true) * 1000)-$latency;
+            $connectorcomplete = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+            $latency = round(microtime(true) * 1000) - $latency;
             // Error Trapping
             if ($getTaxResult->getResultCode() == SeverityLevel::$Success) {
                 /***
@@ -1099,8 +1084,8 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
                 // System Logger starts here:
                     require_once "SystemLogger.php";
                     // Creating the System Logger Object
-                    $application_log     =     new SystemLogger;
-                    $connectorend=$timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
+                    $application_log = new SystemLogger;
+                    $connectorend = $timeStamp->format('Y-m-d\TH:i:s').".".substr((string)microtime(), 2, 3)." ".$timeStamp->format("P"); 
                     $performance_metrics[] = array("CallerTimeStamp","MessageString","CallerAcctNum","DocCode","Operation","ServiceURL","LogType","LogLevel","ERPName","ERPVersion","ConnectorVersion");            
                     $performance_metrics[] = array($connectorstart,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax Start Time-\"".$connectorstart,$account,$getTaxResult->getDocCode(),"GetTax",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
                     $performance_metrics[] = array($connectorcalling,"\"LINECOUNT -".count($getTaxResult->getTaxLines())."PreGetTax End Time-\"".$connectorcalling,$account,$getTaxResult->getDocCode(),"GetTax ",$service_url,"Performance","Informational","CS-Cart",PRODUCT_VERSION,AVALARA_VERSION);
@@ -1110,7 +1095,7 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
                     $returnServiceLog = $application_log->serviceLog($performance_metrics);
                    
                     $log_mode = Registry::get('addons.avatax_tax_calculation.avatax_log_mode');
-                if ($log_mode==1) {
+                if ($log_mode == 1) {
                     $params = '[Input: ' . ']'; // Create Param List
                     $u_name = ''; // Eventually will come from $_SESSION[] object
                     $application_log->AddSystemLog($timeStamp->format('Y-m-d H:i:s'), __FUNCTION__, __CLASS__, __METHOD__, __FILE__, $u_name, $params, $client->__getLastRequest());        // Create System Log
@@ -1128,7 +1113,6 @@ function fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rate
                 // If NOT success - display error messages to console
                 // it is important to iterate through the entire message class
                 return $getTaxResult;
-
             } else {
                 foreach ($getTaxResult->getMessages() as $msg) {
                     $returnMessage .= $msg->getName() . ": " . $msg->getSummary() . "\n";
@@ -2319,20 +2303,14 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
         $p_rate = 0;
         $s_rate = 0;
 
+        $order_info = !empty($cart['user_data']) ? $cart['user_data'] : fn_get_user_info($auth['user_id']);
+
         //Address Validation Starts Here
         /**************
 
         if (Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation') == 1) {
             //AvaTax - Address Validation - Check
             $avatax_tax_country = "";
-
-            if (!empty($cart['user_data'])) {
-                $order_info = $cart['user_data'];
-            } else {
-                $user_info = fn_get_user_info($auth['user_id']);
-                $order_info = $user_info;
-            }
-
 
             if (trim(Registry::get('addons.avatax_tax_calculation.avatax_tax_address_validation_place')) == "both") {
                 $avatax_tax_country = "|US|CA|";
@@ -2358,12 +2336,12 @@ function fn_avatax_tax_calculation_calculate_taxes_post($cart, $group_products, 
             }
         }
         ************/
-       
         //Address Validation Ends Here
-        if (!empty($cart) && !empty($cart_products) && isset($cart['edit_step'])&& $cart['edit_step']=="step_four") {
-            $tax_rate_data = fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rates, $company_id, $cart, $auth);
-            $rate_value = 0;
-            $tax_result = 0;
+
+        $rate_value = 0;
+        $tax_result = 0;
+        if (!empty($cart) && !empty($cart_products)) {
+            $tax_rate_data = fn_avatax_tax_calculation_avatax_amount($group_products, $shipping_rates, $company_id, $cart, $auth, $order_info);
             
             if (!empty($tax_rate_data)) {
                 if ($tax_rate_data->getResultCode() == SeverityLevel::$Success) {

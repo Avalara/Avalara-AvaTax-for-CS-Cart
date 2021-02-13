@@ -4,7 +4,6 @@
 //{
 	//require_once('AvaTax.php');
 	include_once($lib_path."AvaTax4PHP/AvaTax.php");
-	spl_autoload_register(__autoload);
     $return_message = "";
     $return_message_js = "";
    

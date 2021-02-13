@@ -11,16 +11,16 @@
  
 spl_autoload_register(function ($class_name)
 { 	
-	$path=dirname(__FILE__).'/classes/'.$class_name . '.class.php';
+	$path = dirname(__FILE__).'/classes/'.$class_name . '.class.php';
 	
 	if(!file_exists($path))
 	{
-		$path=dirname(__FILE__).'/classes/BatchSvc/'.$class_name . '.class.php';
+		$path = dirname(__FILE__).'/classes/BatchSvc/'.$class_name . '.class.php';
 	}
 	
 	if(!file_exists($path))
 	{
-		$path=dirname(__FILE__).'/classes/AvaCert2Svc/'.$class_name . '.class.php';		
+		$path = dirname(__FILE__).'/classes/AvaCert2Svc/'.$class_name . '.class.php';		
 	}
 	
 	if(file_exists($path))
