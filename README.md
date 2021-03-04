@@ -3,24 +3,15 @@ The CS-Cart connector for AvaTax is a module that integrates the CS-Cart check-o
 
 <h2>Compatibility</h2>
 <b>Avalara AvaTax for CS-Cart Version 00.00.12.00</b> is compatible with CS-Cart versions:
-<p>
-<ul>4.12.1</ul>
-<ul>4.3.8</ul>
-<ul>4.3.7</ul>
-<ul>4.3.6</ul>
-<ul>4.3.5</ul>
-<ul>4.3.4</ul>
-<ul>4.3.3</ul>
-<ul>4.3.2</ul>
-<ul>4.3.1</ul>
-<ul>4.2.3</ul>
-<ul>4.2.2</ul>
-<ul>4.2.1</ul>
-<ul>4.1.5</ul>
-<ul>4.1.4</ul>
-<ul>4.1.3</ul>
-<ul>4.0.2</ul>
-</p>
+<ul>
+<li>4.12.2</li>
+<li>4.12.1</li>
+<li>4.11.5</li>
+<li>4.11.4</li>
+<li>4.11.3</li>
+<li>4.11.2</li>
+<li>4.11.1</li>
+</ul>
 <h2>Documentation</h2>
 <p>Release notes can be accessed <a href="http://help.avalara.com/?cid=Intg-CS-RG-1" target="_blank">here</a>
   
