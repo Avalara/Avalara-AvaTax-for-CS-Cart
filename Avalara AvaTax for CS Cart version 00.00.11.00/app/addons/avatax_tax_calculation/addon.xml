@@ -45,12 +45,12 @@
                         </variants>
                     </item>
                     <item id="avatax_test_connection">
-                            <name>AvaTax Service</name>
-                            <type>info</type>
-                            <handler>fn_avatax_tax_calculation_testconnection</handler>
+                        <name>AvaTax Service</name>
+                        <type>info</type>
+                        <handler>fn_avatax_tax_calculation_testconnection</handler>
                     </item>
-                        <item id="select_codes">
-                            <name>Company Name*</name>
+                    <item id="select_codes">
+                        <name>Company Name*</name>
                         <type>selectbox</type>
                         <default_value/>
                     </item>
@@ -70,7 +70,7 @@
                             <item id="0">
                                 <name>No</name>
                             </item>
-                            </variants>
+                        </variants>
                     </item>
                     <item id="avatax_tax_upc">
                         <name>Send UPC code to AvaTax</name>
@@ -110,7 +110,7 @@
                             <item id="0">
                                 <name>No</name>
                             </item>
-                            </variants>
+                        </variants>
                     </item>
                     <item id="avatax_log_mode">
                         <name>Enable Log</name>
