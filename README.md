@@ -1,6 +1,9 @@
 # Avalara AvaTax for CS-Cart
 The CS-Cart connector for AvaTax is a module that integrates the CS-Cart check-out process with the cloud computing sales tax service AvaTax, provided by Avalara, Inc. for the calculation, compliance and reporting of sales tax. CS-Cart is PHP shopping cart software that uses MySQL to store data and Smarty template engine to build the website’s look and feel.
 
+This is a slightly updated version (fork) of the Avalara-provided source code. This code is still badly outdated and using old APIs.
+For a modern, supported, version please see [the Avatax CS-Cart Add-On in the CS-Cart marketplace](https://marketplace.cs-cart.com/avalara-avatax.html).
+
 <h2>Compatibility</h2>
 <b>Avalara AvaTax for CS-Cart Version 00.00.12.00</b> is compatible with CS-Cart versions:
 <ul>
